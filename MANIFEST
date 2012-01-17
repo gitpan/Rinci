@@ -1,0 +1,16 @@
+Build.PL
+Changes
+LICENSE
+MANIFEST
+MANIFEST.SKIP
+META.yml
+README
+dist.ini
+lib/Rinci.pm
+lib/Rinci.pod
+lib/Rinci/function.pod
+lib/Rinci/package.pod
+lib/Rinci/variable.pod
+t/00-compile.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
