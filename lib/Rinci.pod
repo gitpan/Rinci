@@ -13,7 +13,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.1
+version 1.1.2
 
 =head1 SPECIFICATION VERSION
 
@@ -198,6 +198,8 @@ matches the regex pattern /\A[A-Za-z][A-Za-z0-9_]*([A-Za-z][A-Za-z0-9_]*)*\z/
 is known (listed in the specification), and the property values conform to the
 specification for that property.
 
+Metadata should be written in Unicode (UTF-8).
+
 B<Custom properties>. The specification is extensible: you can add properties of
 your own. Currently the mechanism to formally add a custom property to the
 specification is unspecified, but at least in Perl it is recommended that the
@@ -224,6 +226,17 @@ Example:
 
  v => 1.1
 
+=head3 Property: default_lang => STR
+
+Specify default language used in the text properties like C<summary> and
+C<description>. Default is 'en_US'.
+
+To specify translation texts in other languages, you can use
+C<PROPERTY.alt.lang.CODE>, e.g.:
+
+ summary => "Perform the foo ritual",
+ "summary.alt.lang.id_ID" => "Laksanakan ritual foo",
+
 =head3 Property: name => STR
 
 The name of the entity. Useful when aliasing entity (and reusing the metadata)
@@ -236,13 +249,41 @@ Examples:
 
 =head3 Property: summary => STR
 
-A one-line summary. It should be plain text without any markup. It is like the
-C<summary> clause in L<Data::Sah>.
+A one-line summary. It should be plain text without any markup. Please limit to
+around 72 characters. It is like the C<summary> clause in L<Data::Sah>.
 
 Example:
 
- name => 'foo',
+ # in variable metadata for $Answer
+ summary => 'The answer to the question: what is the meaning of life'
+
+ # in function metadata foo
  summary => 'Perform the foo ritual',
+
+For variable metadata, it should describe what the variable contain. You do not
+need to say "Contains ..." or "A variable that ..." since that is redundant;
+just say directly the content of the variable (noun). You also do not need to
+say what kinds of values the variable should contain, like "An integer, answer
+to the ..." or "..., should be between 1..100" since that should go to the
+C<schema> property.
+
+For function metadata, it should describe what the function does. Suggestion:
+use active, bare infinitive verb like in the example (not "Performs ..."). Avoid
+preamble like "This function ..." since that is redundant. Also avoid describing
+the arguments and its values like "..., accepts a single integer argument" as
+that should go to the C<args> property.
+
+To specify translations in other language, use the L<summary.alt.lang.CODE>.
+Or change the C<default_lang> property. Examples:
+
+ # default language is 'en_US'
+ summary => 'Perform the foo ritual',
+ "summary.alt.lang.id_ID" => 'Laksanakan ritual foo',
+
+ # change default language to id_ID, so all summaries are in Indonesian
+ default_lang => 'id_ID',
+ summary => 'Laksanakan ritual foo',
+ "summary.alt.lang.en_US" => 'Perform the foo ritual',
 
 =head3 Property: tags => ARRAY OF STR
 
@@ -261,6 +302,12 @@ A longer description text. The text should be in marked up in format specified
 by C<text_markup> and is suggested to be formatted to 78 columns. It is like the
 C<description> Data::Sah clause.
 
+To avoid redundancy, you should mentioning things that are already expressed as
+properties, for example: return value of function (specify it in C<result>
+property instead), arguments that the function accepts (C<args>), examples
+(C<examples>), function's features (C<features>) and dependencies/requirements
+(C<deps>).
+
 Example:
 
  {
@@ -277,6 +324,9 @@ Example:
 
  EOT
  }
+
+Like in C<summary>, to specify translations in other language, use the
+L<description.alt.lang.CODE> property.
 
 =head3 Property: links => ARRAY OF HASHES
 

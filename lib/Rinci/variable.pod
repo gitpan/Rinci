@@ -13,7 +13,7 @@ Rinci::variable - Metadata for your variables
 
 =head1 VERSION
 
-version 1.1.1
+version 1.1.2
 
 =head1 SPECIFICATION VERSION
 
@@ -27,6 +27,21 @@ L<Rinci>. Please do a read up on it first, if you have not already done so.
 =head1 SPECIFICATION
 
 There is currently no metadata properties specific to variables.
+
+=head2 Property: schema => SCHEMA
+
+Specify the Sah schema that the variable's value must validate to. This can be
+used by a variable wrapper (getter/setter generator) tool to make sure that
+variable always contains valid values.
+
+Example:
+
+ # metadata for variable $Meaning_Of_Life
+ {
+     ...
+     summary => 'The meaning of life',
+     schema => [int => {between => [1, 100]},
+ }
 
 =head1 FAQ
 
