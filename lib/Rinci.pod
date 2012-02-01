@@ -13,7 +13,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.3
+version 1.1.4
 
 =head1 SPECIFICATION VERSION
 
@@ -29,6 +29,12 @@ making your life easier as a programmer. Rinci also allows better
 interoperability between programming languages. Rinci is geared towards dynamic
 scripting languages like Perl, Python, Ruby, PHP, JavaScript, but is not limited
 to those languages.
+
+=head1 STATUS
+
+The 1.1 series does not guarantee full backward compatibility between revisions,
+so caveat implementor. However, major incompatibility will bump the version to
+1.2 or 2.0.
 
 =head1 WHAT IS RINCI? (TERMINOLOGIES)
 
@@ -48,8 +54,9 @@ Rinci defines properties pertaining to documentation (like C<summary>,
 C<description>, C<examples>, C<links>), function argument and return value
 validation (C<args> and C<result>), dependencies (C<deps>), standardized feature
 description (C<features>), also a few conventions/protocols for doing stuffs
-like undo (others like callback/progress report will follow). The specification
-is extensible: you can define more properties, or more deps, or more features.
+like undo (others like callback/progress report will follow). Basically anything
+that can describe the code entity. The specification is extensible: you can
+define more properties, or more deps, or more features.
 
 =head1 WHAT ARE THE BENEFITS OF RINCI?
 
@@ -87,12 +94,12 @@ L<Riap> command-line client. Call local/remote functions. Automatically convert
 command-line options/arguments to function arguments. Generate help/usage
 message (for C<--help>). Check dependencies (e.g. you can specify that in order
 to run your functions, you need some executables/other functions to exist, an
-environment variable being set, and so on). Even do bash shell completion (using
+environment variable being set, and so on), perform bash shell completion (using
 L<Perinci::BashComplete>).
 
 =item * L<Serabi>
 
-A.k.a. L<Perinci::HTTP::Server>. A L<PSGI> application (a set of PSGI
+A.k.a. L<Perinci::Access::HTTP::Server>. A L<PSGI> application (a set of PSGI
 middlewares, really) to serve metadata and function call requests over HTTP,
 according to the L<Riap::HTTP> protocol.
 
@@ -127,9 +134,9 @@ The benefits that Rinci offer include richer metadata, language neutrality,
 extensibility, and manipulability.
 
 B<Richer metadata>. Rinci strives to provide enough metadata for tools to do
-various useful things. For example, description and summary supports
-translations. Argument specification is pretty rich, with a quite powerful and
-flexible schema language.
+various useful things. For example, the C<description> and C<summary> properties
+support translations. Argument specification is pretty rich, with a quite
+powerful and flexible schema language.
 
 B<Language neutrality>. You can share metadata between languages, including
 documentation and rules for argument validation. Perl 6 allows very powerful
@@ -139,11 +146,15 @@ can easily share validation rules and generate validators in Perl and JavaScript
 
 B<Manipulability>. Being a normal data structure, your Rinci metadata is easier
 to manipulate (clone, merge, modify, export, what have you) as well as access
-(from your language and others).
+(from your language and others). Perl's POD documentation is not accessible from
+the language (but Perl 6's Pod and Python docstrings are, and there are
+certainly tools to parse POD). On the other hand, Python docstrings are attached
+in the same file with the function, while with Rinci you can choose to separate
+the metadata into another file more easily.
 
 B<Other things to consider>. If you stack multiple decorators in Python, for
 example, it usually results in wrapping your Python function multiple times,
-which can add overhead. A single wrapper like Perinci::Sub::Wrapper, on the
+which can add overhead. A single wrapper like L<Perinci::Sub::Wrapper>, on the
 other hand, uses a single level of wrapping to minimize subroutine call
 overhead.
 
@@ -173,12 +184,13 @@ This section describes specification common to all kinds of Rinci metadata.
 
 B<Metadata>. Metadata is just a normal hash. Each hash key is called a property.
 Any hash key in the metadata that starts with C<_> (underscore) is ignored, this
-can be used to store extra data, or experimental properties. Otherwise, the
-property must be known and valid. A property is valid if the property name
-matches the regex pattern /\A[A-Za-z][A-Za-z0-9_]*([A-Za-z][A-Za-z0-9_]*)*\z/
-(in other words, a word or a dotted word like "foo" or "foo.bar") and the name
-is known (listed in the specification), and the property values conform to the
-specification for that property.
+can be used to store extra data, implementation-specific properties, or
+experimental (not yet standardized) properties. Otherwise, the property must be
+known and valid. A property is valid if the property name matches the regex
+pattern /\A[A-Za-z][A-Za-z0-9_]*([A-Za-z][A-Za-z0-9_]*)*\z/ (in other words, a
+word or a dotted word like "foo" or "foo.bar") and the name is known (listed in
+the specification), and the property values conform to the specification for
+that property.
 
 Metadata should be written in Unicode (UTF-8).
 
@@ -325,21 +337,8 @@ LINKS sections in documentation. Each link is a hash with the following keys:
 
 =item * uri => STR (required)
 
-URI is used as a common syntax to refer to resources. To refer to code entities,
-you can use pm (for Perl-based entities), py (Python), php (PHP), rb (Ruby) and
-so on. Use the following general syntax to make it language-independent:
-
- pm:/Package/SubPackage/$var
- py:/Package/SubPackage/func
-
-That is, use the usual C</> (slash) to separate hierarchical packages, and
-sigils (a.k.a. variable prefix symbol, for languages that use them) at the final
-part of the namespace.
-
-If you refer from the same implementation, the URI scheme should be optional,
-e.g. from C<func1> in C<Foo::Bar> Perl module, you can refer to C<func2> in the
-same module with just C<func2>, to C<$baz> in C<Foo::Baz> module with
-C<../Baz/$var1> or C</Foo/Baz/$var>.
+URI is used as a common syntax to refer to resources. If URI scheme is not
+specified, tools can assume that it is a C<riap> URI (see L<Riap>).
 
 =item * title => STR
 
@@ -366,9 +365,9 @@ Example:
          title => "Article describing foo using Bar algorithm",
      },
      {
-         url   => "Baz::foo",
-         title => "Another implementation of foo using the Bar algorithm",
-         tags  => ['related']
+         url   => "../Bar2/",
+         title => "Another implementation of the Bar algorithm",
+         tags  => ['see'],
      },
  ],
 

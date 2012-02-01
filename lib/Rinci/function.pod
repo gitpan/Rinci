@@ -13,7 +13,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.3
+version 1.1.4
 
 =head1 SPECIFICATION VERSION
 
@@ -27,10 +27,10 @@ so.
 
 =head1 SPECIFICATION
 
-B<Result envelope>. Any function or method can be given metadata, but it is
-encouraged (and assumed) that you return an enveloped result from your
-function/method. Result envelope is modeled after HTTP or L<PSGI> response, it
-is an array in the following format:
+B<Result envelope>. Function should return an enveloped result to express error
+code/message as well as actual result. The envelope can be produced by the
+function itself, or added by a wrapper tool. Result envelope is modeled after
+HTTP or L<PSGI> response, it is an array in the following format:
 
  [STATUS, MESSAGE, RESULT, EXTRA]
 
@@ -45,20 +45,16 @@ HTTP response headers. Some example of an enveloped results:
  [500, "Can't delete foo: permission denied", {errno=>51}]
  [200, "Account created", {id=>9323}, {undo_data=>["delete_account"]}]
 
-An enveloped result can contain error code/message as well as the actual result.
-It can also be easily converted to HTTP response message. And it can also
-contain extra data, useful for things like the undo protocol (explained later).
-
-If your function implementation does not return enveloped result, you can use
-wrapper tools to produce it for you.
+As mentioned, an enveloped result can contain error code/message as well as the
+actual result. It can also be easily converted to HTTP response message. And it
+can also contain extra data, useful for things like the undo protocol (explained
+later).
 
 B<Special arguments>. Special arguments are some known arguments that start with
 dash (C<->) and serve special purposes. You need not specify them in the C<args>
 metadata property. Examples of special arguments include C<-undo_action>,
 C<-undo_data>, C<-dry_run>, and they will be explained in relevant sections
-below. NOTE: Currently passing special arguments is only possible when function
-accepts named arguments intead of positional (see C<arg_pass_style>), but a way
-to pass special arguments to those functions might be defined in the future.
+below.
 
 B<Functions vs methods>. Since in many programming languages (like Perl 5,
 Python, Ruby, PHP) static functions are not that differentiated from methods,
@@ -362,102 +358,18 @@ pressed:
 
 then B<bash> will try to complete with usernames starting with C<fo>.
 
-=head2 Property: arg_pass_style => STR
+=head2 Property: args_as => STR
 
-Specify the argument passing style. This information is useful for a function
-wrapper to convert argument calling style, from named to positional and vice
-versa. Valid values include 'named', 'pos'.
+Specify in what form the function expects the arguments. The value is actually
+implementation-specific since it describes the function implementation. For
+example in L<Perinci> for Perl, these values are recognized: C<array>, C<hash>,
+C<arrayref>, C<hashref>. This property is useful for wrapper to be able to
+convert one form to another.
 
-Default is 'named'. This means in Perl:
+The default value is also left to the implementation.
 
- sub func {
-     my %args = @_;
-     my $arg1 = $args{arg1};
-     my $arg1 = $args{arg2};
-     ...
- }
- func(arg1 => 1, arg2 => 2);
-
-In Python:
-
- def func(**args):
-     arg1 = args.get('arg1') // or args['arg1']
-     arg2 = args.get('arg2') // or args['arg2']
- func(arg1=1, arg2=2)
-
-In Ruby:
-
- def func(args)
-   arg1 = args[:arg1]
-   arg2 = args[:arg2]
-   ...
- end
- func(:arg1 => 1, :arg2 => 2)
-
-In PHP:
-
- function foo($args) {
-     $arg1 = $args['arg1'];
-     $arg2 = $args['arg2'];
- }
- foo(array("arg1"=>1, "arg2"=>2));
-
-In JavaScript:
-
- function func(args) {
-     let arg1 = args.arg1 // or args['arg1']
-     let arg2 = args.arg2 // or args['arg2']
-     ...
- }
- func({arg1: 1, arg2: 2})
-
-Passing style 'ref_named' is the same as 'named', except in Perl:
-
- sub func {
-     my $args = shift;
-     my $arg1 = $args->{arg1};
-     my $arg1 = $args->{arg2};
-     ...
- }
- func1({arg1=>1, arg2=>2});
-
-Passing style 'pos' is for positional. In Perl:
-
- sub func {
-     my ($arg1, $arg2) = @_;
-     ....
- }
- func(1, 2);
-
-In Python:
-
- def func(arg1, arg2):
-     ....
- func(1, 2)
-
-In Ruby:
-
- def func(arg1, arg2)
-   ...
- end
- func(1, 2)
-
-In PHP:
-
- function func($arg1, $arg2) {
-     ...
- }
- func(1, 2);
-
-In JavaScript:
-
- function func(arg1, arg2) {
-     ...
- }
- func(1, 2)
-
-NOTE: Passing style 'ref_named' (like func({arg1=>1, arg2=>2}) in Perl) and
-'ref_pos' (like func([1, 2]) in Perl) can be added in the future.
+For interimplementation communication (e.g. via L<Riap::HTTP> or L<Riap::TCP>),
+named arguments are always used so this property is irrelevant.
 
 =head2 Property: result => HASH
 
@@ -479,7 +391,7 @@ Like the C<description> property. Suggested to be formatted to 78 columns.
 
 =back
 
-Note that since by default C<result_envelope> is true, instead of just
+Note that since functions normally return enveloped result, instead of
 returning:
 
  RESULT
@@ -505,42 +417,13 @@ Examples:
      }]
  }
 
-=head2 Property: result_envelope => BOOL
+=head2 Property: result_naked => BOOL
 
-Declare that function generates envelopes for its result. By default it is true.
-Setting this property to false is useful for "legacy" functions which do not yet
-use envelopes, or perhaps for functions which never need to, because it never
-returns results or return only simple/primitive results. In this case, a
-function wrapper can generate result envelope for the such functions.
-
-A "normal" function which return enveloped result:
-
- $SPEC{is_palindrome} = {
-     v => 1.1,
-     summary => 'Check whether a string is a palindrome',
-     args    => {str => {schema=>'str*'}},
-     result  => {schema=>'bool*'},
- };
- sub is_palindrome {
-     my %args = @_;
-     my $str  = $args{str};
-     [200, "OK", $str eq reverse($str) ? 1:0];
- }
-
-A function which returns "naked" result:
-
- $SPEC{is_palindrome} = {
-     v => 1.1,
-     summary         => 'Check whether a string is a palindrome',
-     args            => {str => {schema=>'str*'}},
-     result          => {schema=>'bool*'},
-     result_envelope => 0,
- };
- sub is_palindrome {
-     my %args = @_;
-     my $str  = $args{str};
-     $str eq reverse($str);
- }
+If set to true, specify that function does not envelope its results. The default
+is false, to encourage functions to create envelopes. However, wrapper should be
+able to create or strip envelope if needed. For example, if you have
+"traditional" functions which does not do envelopes, you can set this property
+to true, and the wrapper can generate the envelope for the functions.
 
 =head2 Property: examples => ARRAY
 
