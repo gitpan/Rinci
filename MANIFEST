@@ -8,6 +8,7 @@ README
 dist.ini
 lib/Rinci.pm
 lib/Rinci.pod
+lib/Rinci/Schema.pm
 lib/Rinci/Tutorial.pod
 lib/Rinci/Upgrading.pod
 lib/Rinci/function.pod
