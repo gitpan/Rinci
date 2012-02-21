@@ -13,7 +13,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.5
+version 1.1.6
 
 =head1 SPECIFICATION VERSION
 
@@ -139,14 +139,17 @@ more specific).
 501 (not implemented)
 
 503 (service unavailable). You can use this when service is temporarily
-unavailable. Users should try again at a later time.
+unavailable, e.g. when system load is too high, a required service is down, etc.
+Users should try again at a later time.
 
 507 (insufficient storage)
+
+521 (maximum retries reach)
 
 53x (bad metadata) is used when there is something wrong with the metadata.
 
 Try not to use code greater than 555, as some tools use (CODE-300) for error
-codes that must fit in one unsigned byte (like L<Rias::Sub::CmdLine>).
+codes that must fit in one unsigned byte (like L<Perinci::CmdLine>).
 
 =back
 
@@ -226,9 +229,14 @@ from zero.
 Only relevant if B<pos> is specified, specify whether argument should gobble up
 all remaining values in an ordered argument list into an array.
 
+=item * B<alias_for> => STR
+
+Specify that this argument is actually an alias for another argument. This is
+useful when doing argument name completion. Will be explained in the example.
+
 =item * B<completion> => CODE
 
-A code to supply argument completion. Will be explained in the examples.
+A code to supply argument value completion. Will be explained in the examples.
 
 =back
 
@@ -259,12 +267,18 @@ Example function metadata and its implementation in Perl:
              pos => 2,
              tags => ['category:options'],
          },
+         fp => { # for 'floating point'
+             summary => 'Alias for setting round to 0',
+             schema => [bool => {is=>1}],
+             alias_for => 'round',
+         },
      }
  };
  sub multiply2 {
      my %args = @_;
      my $res = $args{a} * $args{b};
-     $res = int($res) if $args{round};
+     my $round = defined($args{fp}) ? !$args{fp} : $args{round};
+     $res = int($res) if $round;
      [200, "OK", $res];
  }
 
@@ -284,7 +298,50 @@ well as positional arguments:
  % multiply2 2 --b 3
  % multiply2 2 3
 
-Another example (demonstrates the B<greedy> argument specification):
+As mentioned earlier, the 'alias_for' is useful in doing argument name
+completion. When none of the arguments are given, completion will list --a, --b,
+--round, --noround, --fp. When --fp is already given, the next completion will
+list only --a and --b as --fp is an alias for --round.
+
+Another example (demonstrates C<alias_for>):
+
+ $SPEC{smtpd} = {
+     v => 1.1,
+     summary => 'Control SMTP daemon',
+     args    => {
+         action => {
+             schema => ['str*' => {in=>[qw/status start stop restart/]}],
+             pos    => 0,
+             req    => 1,
+         },
+         status => {
+             summary   => 'Alias for setting action=status',
+             alias_for =>'action',
+         },
+         start => {
+             summary   => 'Alias for setting action=start',
+             alias_for =>'action',
+         },
+         stop => {
+             summary   => 'Alias for setting action=stop',
+             alias_for =>'action',
+         },
+         restart => {
+             summary   => 'Alias for setting action=restart',
+             alias_for =>'action',
+         },
+         force => {
+             schema => 'bool',
+         },
+     },
+ };
+
+If none of the arguments are given, completion will list --action, --status,
+--start, --stop, --restart, and --force. If either --action, --status, --start,
+--stop, or --restart is already given, the only completion left for the next
+argument will be --force.
+
+Another example (demonstrates B<greedy>):
 
  $SPEC{multiply_many} = {
      v => 1.1,
@@ -323,13 +380,12 @@ in addition to the normal:
  % multiply-many --nums '[2, 3, 4]'
 
 B<completion>. This argument specification key specifies how to complete
-argument value (e.g. in shell or L<Rinci::Protocol::HTTP>) and is supplied an
-anonymous function as value. The function will be called with arguments:
-word=>... (which is the formed word so far), args=>... (which is the C<args>
-property value). The function should return an array containing a list of
-possible candidates. For an example of implementation for this, see
-L<Sub::Spec::BashComplete> in Perl which provides tab completion for argument
-values. Example:
+argument value (e.g. in shell or L<Riap::HTTP>) and is supplied an anonymous
+function as value. The function will be called with arguments: word=>... (which
+is the formed word so far), args=>... (which is the C<args> property value). The
+function should return an array containing a list of possible candidates. For an
+example of implementation for this, see L<Perinci::BashComplete> in Perl which
+provides tab completion for argument values. Example:
 
  $SPEC{delete_user} = {
      v => 1.1,
