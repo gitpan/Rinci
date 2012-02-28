@@ -134,7 +134,7 @@ Rinci::Schema - Schemas for Rinci metadata
 
 =head1 VERSION
 
-version 1.1.8
+version 1.1.9
 
 =head1 AUTHOR
 
