@@ -13,7 +13,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.10
+version 1.1.11
 
 =head1 SPECIFICATION VERSION
 
@@ -223,6 +223,21 @@ assumed to be the old, Sub::Spec 1.0.x metadata.
 Example:
 
  v => 1.1
+
+=head2 Property: entity_version => STR
+
+Specify entity version (like package or function version). This is version as in
+software implementation version, not to be confused with C<v> which is the
+metadata specification version (1.1).
+
+Example:
+
+ entity_version => 0.24
+
+In Perl, modules usually put version numbers in package variable called
+C<$VERSION>. If not set, tools like L<Perinci::Access::InProcess> automatically
+fills this property from that variable, to relieve authors from manually setting
+this property value.
 
 =head3 Property: default_lang => STR
 

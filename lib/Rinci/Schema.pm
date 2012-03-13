@@ -92,6 +92,7 @@ our $function = ['Rinci::metadata' => {
                 undo => 'bool',
                 dry_run => 'bool',
                 pure => 'bool',
+                immutable => 'bool',
             },
         }],
 
@@ -134,7 +135,7 @@ Rinci::Schema - Schemas for Rinci metadata
 
 =head1 VERSION
 
-version 1.1.10
+version 1.1.11
 
 =head1 AUTHOR
 
