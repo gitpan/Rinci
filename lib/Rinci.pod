@@ -1,5 +1,7 @@
 package Rinci; # just to make PodWeaver happy
 
+our $VERSION = '1.1.12'; # VERSION
+
 1;
 # ABSTRACT: Language-neutral metadata for your code
 
@@ -13,7 +15,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.11
+version 1.1.12
 
 =head1 SPECIFICATION VERSION
 
@@ -423,6 +425,8 @@ Currently these specifications are defined:
 =item * L<Rinci::package> - Metadata for namespaces/packages
 
 =item * L<Rinci::variable> - Metadata for variables
+
+=item * L<Rinci::result> - Function/method result metadata
 
 =back
 

@@ -13,6 +13,7 @@ lib/Rinci/Tutorial.pod
 lib/Rinci/Upgrading.pod
 lib/Rinci/function.pod
 lib/Rinci/package.pod
+lib/Rinci/result.pod
 lib/Rinci/variable.pod
 t/00-compile.t
 t/release-pod-coverage.t

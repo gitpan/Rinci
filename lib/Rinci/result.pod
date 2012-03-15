@@ -1,0 +1,60 @@
+package Rinci::result; # just to make PodWeaver happy
+
+our $VERSION = '1.1.12'; # VERSION
+
+1;
+# ABSTRACT: Function/method result metadata
+
+
+__END__
+=pod
+
+=head1 NAME
+
+Rinci::result - Function/method result metadata
+
+=head1 VERSION
+
+version 1.1.12
+
+=head1 SPECIFICATION VERSION
+
+ 1.1
+
+=head1 INTRODUCTION
+
+This document describes metadata for function/method result. This specification
+is part of L<Rinci>. Please do a read up on it first, if you have not already
+done so.
+
+=head1 SPECIFICATION
+
+There are currently several properties being used:
+
+=head2 Property: undo_data => ANY
+
+Explained in C<undo> feature section in L<Rinci::function>.
+
+=head2 Properties: cmdline.*
+
+Interpreted by L<Perinci::CmdLine>. See its documentation for more detail.
+
+=head1 FAQ
+
+=head1 SEE ALSO
+
+B<Rinci>
+
+=head1 AUTHOR
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2012 by Steven Haryanto.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
+
