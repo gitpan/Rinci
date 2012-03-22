@@ -1,6 +1,6 @@
 package Rinci::function; # just to make PodWeaver happy
 
-our $VERSION = '1.1.12'; # VERSION
+our $VERSION = '1.1.13'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your functions/methods
@@ -15,7 +15,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.12
+version 1.1.13
 
 =head1 SPECIFICATION VERSION
 
@@ -219,10 +219,10 @@ Default is false.
 A longer description of marked up text, much like the C<description> property.
 It is suggested to format the text to 74 columns.
 
-=item * B<tags> => ARRAY OF STR
+=item * B<tags> => ARRAY OF (STR|HASH)
 
-An array of strings, can be used by tools to categorize arguments. Not unlike
-the C<tags> property.
+An array of tags, can be used by tools to categorize arguments. Not unlike the
+C<tags> property.
 
 =item * B<pos> => INT
 
