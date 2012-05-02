@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.14'; # VERSION
+our $VERSION = '1.1.15'; # VERSION
 
 # only validates metadata v1.1
 
@@ -52,7 +52,7 @@ our $base = ['hash' => {
 }];
 
 our $function = ['Rinci::metadata' => {
-    '[merge:+]keys' => {
+    '[merge+]keys' => {
         is_func => ['bool' => {
             default => 1,
         }],
@@ -115,12 +115,12 @@ our $function = ['Rinci::metadata' => {
 }];
 
 our $package = ['Rinci::metadata' => {
-    '[merge:+]keys' => {
+    '[merge+]keys' => {
     },
 }];
 
 our $variable = ['Rinci::metadata' => {
-    '[merge:+]keys' => {
+    '[merge+]keys' => {
     },
 }];
 
@@ -137,7 +137,7 @@ Rinci::Schema - Schemas for Rinci metadata
 
 =head1 VERSION
 
-version 1.1.14
+version 1.1.15
 
 =head1 AUTHOR
 

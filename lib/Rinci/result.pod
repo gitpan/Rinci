@@ -1,6 +1,6 @@
 package Rinci::result; # just to make PodWeaver happy
 
-our $VERSION = '1.1.14'; # VERSION
+our $VERSION = '1.1.15'; # VERSION
 
 1;
 # ABSTRACT: Function/method result metadata
@@ -15,7 +15,7 @@ Rinci::result - Function/method result metadata
 
 =head1 VERSION
 
-version 1.1.14
+version 1.1.15
 
 =head1 SPECIFICATION VERSION
 
