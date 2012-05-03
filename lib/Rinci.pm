@@ -1,6 +1,6 @@
 package Rinci;
 
-our $VERSION = '1.1.15'; # VERSION
+our $VERSION = '1.1.16'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -14,7 +14,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.15
+version 1.1.16
 
 =head1 AUTHOR
 
