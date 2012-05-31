@@ -9,9 +9,10 @@ dist.ini
 lib/Rinci.pm
 lib/Rinci.pod
 lib/Rinci/Schema.pm
-lib/Rinci/Tutorial.pod
 lib/Rinci/Upgrading.pod
 lib/Rinci/function.pod
+lib/Rinci/function/Transaction.pod
+lib/Rinci/function/Undo.pod
 lib/Rinci/package.pod
 lib/Rinci/result.pod
 lib/Rinci/variable.pod

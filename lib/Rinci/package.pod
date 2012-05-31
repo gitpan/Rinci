@@ -1,6 +1,6 @@
 package Rinci::package; # just to make PodWeaver happy
 
-our $VERSION = '1.1.16'; # VERSION
+our $VERSION = '1.1.17'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your namespaces/packages
@@ -15,7 +15,7 @@ Rinci::package - Metadata for your namespaces/packages
 
 =head1 VERSION
 
-version 1.1.16
+version 1.1.17
 
 =head1 SPECIFICATION VERSION
 
@@ -38,7 +38,7 @@ metadata for classes will be specified in another specification
 
 =head1 SEE ALSO
 
-B<Rinci>
+L<Rinci>
 
 =head1 AUTHOR
 

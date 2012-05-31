@@ -1,6 +1,6 @@
 package Rinci::result; # just to make PodWeaver happy
 
-our $VERSION = '1.1.16'; # VERSION
+our $VERSION = '1.1.17'; # VERSION
 
 1;
 # ABSTRACT: Function/method result metadata
@@ -15,7 +15,7 @@ Rinci::result - Function/method result metadata
 
 =head1 VERSION
 
-version 1.1.16
+version 1.1.17
 
 =head1 SPECIFICATION VERSION
 
@@ -43,7 +43,7 @@ Interpreted by L<Perinci::CmdLine>. See its documentation for more detail.
 
 =head1 SEE ALSO
 
-B<Rinci>
+L<Rinci>
 
 =head1 AUTHOR
 

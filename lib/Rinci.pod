@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.16'; # VERSION
+our $VERSION = '1.1.17'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.16
+version 1.1.17
 
 =head1 SPECIFICATION VERSION
 
@@ -526,7 +526,7 @@ http://wiki.python.org/moin/PythonDecorators
 
 =head2 Other related links
 
-B<Acmeism>, http://www.acmeism.org/
+L<Acmeism>, http://www.acmeism.org/
 
 =head1 AUTHOR
 
