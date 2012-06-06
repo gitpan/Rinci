@@ -1,6 +1,6 @@
 package Rinci::function; # just to make PodWeaver happy
 
-our $VERSION = '1.1.17'; # VERSION
+our $VERSION = '1.1.18'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your functions/methods
@@ -15,7 +15,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.17
+version 1.1.18
 
 =head1 SPECIFICATION VERSION
 
@@ -611,13 +611,14 @@ declared with this feature.
 
 Specify transactional features. Can be set to a hash containing these keys:
 B<use> (bool, defaults to false, whether function can use transaction if it
-exists), B<require> (bool, defaults to false, whether function always require
+exists), B<req> (bool, defaults to false, whether function always require
 running in a transaction, B<start> (bool, defaults to false, whether function
 starts a new transaction on invocation), B<end> (bool, defaults to false,
 whether function ends [commits/rolls back] transaction).
 
-Currently there is little further specification; transactional feature is used
-alongside with undo protocol, described in L<Rinci::function::Undo>.
+See L<Rinci::function::Transaction> for more details on transactions. Currently
+there is little further specification; transactional feature is used alongside
+with undo protocol, described in L<Rinci::function::Undo>.
 
 L<Riap::Transaction> requires functions participating in a transaction be
 declared with this feature, because the specification is for allowing
@@ -783,17 +784,25 @@ Example in Ruby:
 
  "code" => Proc.new { Process.euid > 0 }  # i am not being run as root
 
-=item * dep: undo_storage => STORAGE_SPEC
+=item * dep: tmp_dir => BOOL
 
-Specify that function requires some external undo storage. STORAGE_SPEC is a
-hash. Currently the only known keys are: C<tmp_dir> with the value of 1,
-C<trash_dir> with the value of 1 (trash_dir is basically the same as tmp_dir,
-but provides clue to the undo/transaction manager that the directory is used for
-trash, so it can arrange directory to be in the same partition, etc.)
+If set to 1, specify that function requires temporary directory. Caller should
+provide path to this using special argument C<-tmp_dir>.
 
-Example:
+=item * dep: trash_dir => BOOL
 
- undo_storage => {trash_dir=>1}
+If set to 1, specify that function requires trash directory. Trash is not unlike
+a temporary directory. Caller should provide path to trash directory using
+special argument C<-trash_dir>.
+
+=item * dep: undo_trash_dir => BOOL
+
+If set to 1, specify that function (which should be undoable, i.e. have C<undo>
+feature set to true) requires trash directory specifically for undo. Caller
+should provide path to trash directory using special argument C<-undo_trash_dir>
+only when doing do/undo operation.
+
+Undo trash directory can be provided by transaction manager.
 
 =item * dep: all => [DEPHASH, ...]
 

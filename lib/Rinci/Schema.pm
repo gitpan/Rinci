@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.17'; # VERSION
+our $VERSION = '1.1.18'; # VERSION
 
 # only validates metadata v1.1
 
@@ -137,7 +137,7 @@ Rinci::Schema - Schemas for Rinci metadata
 
 =head1 VERSION
 
-version 1.1.17
+version 1.1.18
 
 =head1 AUTHOR
 

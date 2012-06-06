@@ -13,9 +13,7 @@ meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: Rinci
-requires:
-  perl: 5.010000
 resources:
   homepage: http://metacpan.org/release/Rinci
   repository: http://github.com/sharyanto/perl-Rinci
-version: 1.1.17
+version: 1.1.18
