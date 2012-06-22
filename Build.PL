@@ -17,7 +17,7 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Rinci",
-  "dist_version" => "1.1.18",
+  "dist_version" => "1.1.19",
   "license" => "perl",
   "module_name" => "Rinci",
   "recommends" => {},
