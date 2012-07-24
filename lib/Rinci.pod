@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.20'; # VERSION
+our $VERSION = '1.1.21'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.20
+version 1.1.21
 
 =head1 SPECIFICATION VERSION
 
@@ -226,7 +226,7 @@ Example:
 
  v => 1.1
 
-=head2 Property: entity_version => STR
+=head3 Property: entity_version => STR
 
 Specify entity version (like package or function version). This is version as in
 software implementation version, not to be confused with C<v> which is the
