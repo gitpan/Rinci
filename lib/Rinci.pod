@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.21'; # VERSION
+our $VERSION = '1.1.22'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.21
+version 1.1.22
 
 =head1 SPECIFICATION VERSION
 
@@ -538,6 +538,418 @@ This software is copyright (c) 2012 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
+=head1 CHANGES
+
+=head2 Version 1.1.22 (2012-08-09)
+
+=over 4
+
+=item *
+
+tx: Describe the ordering of calls during undo/rollback/redo when there is nested call. The same function may be called twice or more with parts of undo/redo steps.
+
+=item *
+
+tx: In transaction mode, function now gets undo/redo data from the usual -undo_data special argument, like in non-transaction mode. Txm's API get_undo_steps() and get_redo_steps() are now removed.
+
+=back
+
+=head2 Version 1.1.21 (2012-07-23)
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGES] function: Remove argument specification key 'src', use 'cmdline_src' instead. I think 'src' is too general.
+
+=back
+
+=head2 Version 1.1.20 (2012-07-21)
+
+=over 4
+
+=item *
+
+function: Add argument specification keys 'src' and 'cmdline_src'.
+
+=back
+
+=head2 Version 1.1.19 (2012-06-22)
+
+=over 4
+
+=item *
+
+Adjust transaction status labels. Final statuses are now in uppercase:
+
+=item *
+
+C, R, U, X; while transient statuses are in lowercase: i, a, u, d, e.
+
+=item *
+
+Add response status 429 (too many requests).
+
+=back
+
+=head2 Version 1.1.18 (2012-06-06)
+
+=over 4
+
+=item *
+
+Refinements to transaction details.
+
+=item *
+
+Remove dependency clause 'undo_storage'. Add dependency clauses
+
+=item *
+
+'tmp_dir', 'trash_dir', 'undo_trash_dir'.
+
+=back
+
+=head2 Version 1.1.17 (2012-05-31)
+
+=over 4
+
+=item *
+
+Specify transactional system (Rinci::function::Transaction). Split
+
+=item *
+
+specification for undo to Rinci::function::Undo and specify undo/redo
+
+=item *
+
+protocol under transaction.
+
+=back
+
+=head2 Version 1.1.16 (2012-05-03)
+
+=over 4
+
+=item *
+
+Refine undo protocol documentation. Specify interaction with
+
+=item *
+
+undo/transaction manager. '-undo_hint' is now replaced by
+
+=item *
+
+'-undo_storage'. Declare 'undo_storage' dependency clause.
+
+=back
+
+=head2 Version 1.1.15 (2012-05-02)
+
+=over 4
+
+=item *
+
+No functional changes.
+
+=back
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGE] Update Sah schema syntax (pre-0.03, [merge:X] -> [mergeX])
+
+=back
+
+=head2 Version 1.1.14 (2012-05-02)
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGE] Change 'exec' dependency clause to 'prog' (avoid possible confusion because 'exec' can imply that we need to execute the program; there can be other future dep clause for that).
+
+=back
+
+=head2 Version 1.1.13 (2012-03-23)
+
+=over 4
+
+=item *
+
+[ENHANCEMENTS] Each tag in 'tags' property can also be a tag metadata hash (for
+
+=item *
+
+[ENHANCEMENTS] translatable message, etc).
+
+=back
+
+=head2 Version 1.1.12 (2012-03-13)
+
+=over 4
+
+=item *
+
+[ENHANCEMENTS] Add 'Rinci::result'.
+
+=back
+
+=head2 Version 1.1.11 (2012-03-13)
+
+=over 4
+
+=item *
+
+[ENHANCEMENTS] Add property 'entity_version'.
+
+=back
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGES] package: Remove property 'pkg_version' (use 'entity_version'
+
+=item *
+
+[INCOMPATIBLE CHANGES] instead).
+
+=back
+
+=head2 Version 1.1.10 (2012-02-28)
+
+=over 4
+
+=item *
+
+function: arg spec 'aliases': Add alias spec 'schema'
+
+=back
+
+=head2 Version 1.1.9 (2012-02-28)
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGE] function: Change (back) 'set' alias spec to 'code', in arg spec
+
+=item *
+
+[INCOMPATIBLE CHANGE] 'aliases' (for backward compatibility with 1.0)
+
+=back
+
+=head2 Version 1.1.8 (2012-02-28)
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGES] function: Replace (back) 'alias_for' argument spec with
+
+=item *
+
+[INCOMPATIBLE CHANGES] 'cmdline_aliases'. I first used 'alias_for' so I can list each alias as
+
+=item *
+
+[INCOMPATIBLE CHANGES] a key in 'args' property. The goal is so I can get all argument names
+
+=item *
+
+[INCOMPATIBLE CHANGES] aliases) simply by doing a keys() on 'args' hash. And the goal of
+
+=item *
+
+[INCOMPATIBLE CHANGES] that is to add a 'complete_arg_name' Riap action which is more
+
+=item *
+
+[INCOMPATIBLE CHANGES] lightweight than a full 'meta' just to get argument names. Turns out
+
+=item *
+
+[INCOMPATIBLE CHANGES] that I don't need 'alias_for' just to support 'complete_arg_name', and
+
+=item *
+
+[INCOMPATIBLE CHANGES] also turns out that completing argument name needs more than just all
+
+=item *
+
+[INCOMPATIBLE CHANGES] argument names + aliases. You also need 'pos' information. So a full
+
+=item *
+
+[INCOMPATIBLE CHANGES] 'meta' is currently used. The reason I now revert to 'cmdline_aliases'
+
+=item *
+
+[INCOMPATIBLE CHANGES] style is because I don't want command-line aliases to become
+
+=item *
+
+[INCOMPATIBLE CHANGES] full/first-class argument.
+
+=back
+
+=head2 Version 1.1.7 (2012-02-23)
+
+=over 4
+
+=item *
+
+package: Add property 'pkg_version'.
+
+=back
+
+=head2 Version 1.1.6 (2012-02-21)
+
+=over 4
+
+=item *
+
+function: Add 'alias_for' argument specification.
+
+=back
+
+=head2 Version 1.1.5 (2012-02-10)
+
+=over 4
+
+=item *
+
+No spec changes.
+
+=item *
+
+Add Rinci::Schema.
+
+=back
+
+=head2 Version 1.1.4 (2012-02-01)
+
+=over 4
+
+=item *
+
+Declare that 1.1 series might introduce minor backward compatibility problems between revisions.
+
+=item *
+
+Rename 'arg_pass_style' and 'result_envelope' to the old (Sub::Spec-era) 'args_as' and 'result_naked'. New names are not better.
+
+=item *
+
+Code entity URI now moved to Riap specification as the 'riap' URI scheme.
+
+=item *
+
+Some minor revisions.
+
+=back
+
+=head2 Version 1.1.3 (2012-01-27)
+
+=over 4
+
+=item *
+
+Change syntax of code entity URI, from 'Pkg.SubPkg.func' to 'pm:/Pkg/SubPkg/func' (or 'py:', 'php:', and so on).
+
+=item *
+
+Some minor revisions like wording and paragraph reorganization.
+
+=back
+
+=head2 Version 1.1.2 (2012-01-19)
+
+=over 4
+
+=item *
+
+Add 'default_lang' property. Add guidelines on what to put in 'summary' and 'description'.
+
+=item *
+
+variable: Add 'schema' property.
+
+=back
+
+=head2 Version 1.1.1 (2012-01-18)
+
+=over 4
+
+=item *
+
+No spec changes. Update module names (Rinci::HTTP -> Riap, Rias ->
+
+=item *
+
+Perinci). Add documents Rinci::Upgrading and Rinci::Tutorial (stub).
+
+=back
+
+=head2 Version 1.1.0 (2012-01-15)
+
+=over 4
+
+=item *
+
+First release. Spun off from Sub::Spec.
+
+=item *
+
+Incompatible differences with Sub::Spec 1.0.x:
+
+=item *
+
+Terminology: 'spec clause' becomes 'property'. This is to avoid confusion with 'clause' as used in Sah schema language.
+
+=item *
+
+Default text markup format changed from Org to Markdown, but a new properties 'text_markup' is added to allow specifying 'org' or 'markdown' (or 'none').
+
+=item *
+
+'v' clause is now required to declare Rinci spec version (with value 1.1, if unspecified then assumed spec is old Sub::Spec 1.0).
+
+=item *
+
+function: Incompatible changes to 'args' and 'result' properties; 'args' is now a hash of arg names and arg *specs* (instead of arg schemas). 'result' is now a hash of data, instead of schema. The purpose is to keep Sah schema clean from custom, non-schema-related schema clauses, like arg_* (thus requiring custom Sah extensions, etc). Mixing them into schemas was not the right way.
+
+=item *
+
+function: property 'type' removed, replaced with 'is_func', 'is_meth', 'is_static_meth'. This is because a single subroutine/function can act as all.
+
+=item *
+
+function: Other properties which are also removed/replaced: 'timeout' (non-core), 'retry' (non-core), 'scope' (can be replaced by using tags), 'result_naked' (replaced by 'result_envelope'), 'args_as' (replaced by 'arg_pass_style').
+
+=item *
+
+function: property 'deps': terminology change ('dep clause' -> 'dep type'), rename dep types: 'sub' -> 'func', 'mod' -> 'perl_module'.
+
+=item *
+
+Additions:
+
+=item *
+
+Keys beginning with "_" are allowed and ignored. This can be used to store extra information.
+
+=item *
+
+New properties: 'tags', 'links', 'examples'.
+
+=back
 
 =cut
 
