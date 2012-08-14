@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.22'; # VERSION
+our $VERSION = '1.1.23'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.22
+version 1.1.23
 
 =head1 SPECIFICATION VERSION
 
@@ -540,6 +540,56 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =head1 CHANGES
+
+=head2 Version 1.1.23 (2012-08-14)
+
+=over 4
+
+=item *
+
+Major rewrite of transaction specification.
+
+=item *
+
+The main motivation is to remove the concept of 'steps' as this is a
+
+=item *
+
+false dichotomy. Steps are actually functions themselves, the units of
+
+=item *
+
+work are still functions. Eventually, a complex system will need to
+
+=item *
+
+nest functions inside functions, to more than two levels of nesting.
+
+=item *
+
+Why divide and limit into two levels (function-step)? So:
+
+=item *
+
+Everything is a bit clearer now
+
+=item *
+
+$tm interface is saner ($tm->call, easier to call function inside another)
+
+=item *
+
+No more mention of unused transaction status: e
+
+=item *
+
+New transaction statuses: v (rollback of undoing process), e (rollback of redoing process).
+
+=item *
+
+Recovery does not always means rollback (to R). For transactions in u and d status, we continue the undoing/redoing. For transactions in v and e status, we continue the rollback to final status C and U, respectively.
+
+=back
 
 =head2 Version 1.1.22 (2012-08-09)
 

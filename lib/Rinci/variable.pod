@@ -1,6 +1,6 @@
 package Rinci::variable; # just to make PodWeaver happy
 
-our $VERSION = '1.1.22'; # VERSION
+our $VERSION = '1.1.23'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your variables
@@ -15,7 +15,7 @@ Rinci::variable - Metadata for your variables
 
 =head1 VERSION
 
-version 1.1.22
+version 1.1.23
 
 =head1 SPECIFICATION VERSION
 
