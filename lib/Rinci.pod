@@ -1,9 +1,9 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.23'; # VERSION
+our $VERSION = '1.1.24'; # VERSION
 
 1;
-# ABSTRACT: Language-neutral metadata for your code
+# ABSTRACT: Language-neutral metadata for your code entities
 
 
 __END__
@@ -11,11 +11,11 @@ __END__
 
 =head1 NAME
 
-Rinci - Language-neutral metadata for your code
+Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.23
+version 1.1.24
 
 =head1 SPECIFICATION VERSION
 
@@ -540,6 +540,32 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =head1 CHANGES
+
+=head2 Version 1.1.24 (2012-08-21)
+
+=over 4
+
+=item *
+
+[ENHANCEMENTS] Specify TM's interface in more details (moved from Riap::Transaction, which now becomes shorter).
+
+=item *
+
+[ENHANCEMENTS] Specify steps for action, rollback, and crash recovery in more details, with example.
+
+=back
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGES] Deprecate undo protocol, now undo should be implemented solely using transaction.
+
+=item *
+
+[INCOMPATIBLE CHANGES] Revise transaction specification. Introduce protocol version (v) and bump it to v=2. Require 'tx' feature to specify protocol version. Incompatibilities include: 1) transaction now no longer uses undo protocol but adapts mechanism from Perinci::Sub::Gen::Undoable (which will also be deprecated as the mechanism is now elevated into standards).
+
+=back
 
 =head2 Version 1.1.23 (2012-08-14)
 
