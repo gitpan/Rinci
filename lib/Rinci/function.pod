@@ -1,6 +1,6 @@
 package Rinci::function; # just to make PodWeaver happy
 
-our $VERSION = '1.1.24'; # VERSION
+our $VERSION = '1.1.25'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your functions/methods
@@ -15,7 +15,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.24
+version 1.1.25
 
 =head1 SPECIFICATION VERSION
 
@@ -624,12 +624,7 @@ caller can add special argument C<-reverse>. For example:
 
 Default is none. Specify transactional support, as specified in
 L<Rinci::Transaction>. Value is a hash containing these keys: C<v> (int,
-protocol version, default if not specified is 1), B<use> (bool, defaults to
-false, whether function can participate in transaction), B<req> (bool, defaults
-to false, whether function always require running in a transaction, B<start>
-(bool, defaults to false, whether function starts a new transaction on
-invocation), B<end> (bool, defaults to false, whether function ends
-[commits/rolls back] transaction).
+protocol version, default if not specified is 1).
 
 Please see Rinci::Transaction for more details on transaction.
 

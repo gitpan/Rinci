@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.24'; # VERSION
+our $VERSION = '1.1.25'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code entities
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.24
+version 1.1.25
 
 =head1 SPECIFICATION VERSION
 
@@ -541,6 +541,16 @@ the same terms as the Perl 5 programming language system itself.
 
 =head1 CHANGES
 
+=head2 Version 1.1.25 (2012-08-22)
+
+=over 4
+
+=item *
+
+[INCOMPATIBLE CHANGES] Remove properties 'use' and 'req' in 'tx' feature. This is to make things simpler. use=>1 is redundant, if function follows transaction protocol it means you can use it in transaction. req=>1 is also removed, all functions should just require transaction and potentially return 'do_actions'. A simple wrapper can be created to execute those actions without transaction, if wanted.
+
+=back
+
 =head2 Version 1.1.24 (2012-08-21)
 
 =over 4
@@ -563,7 +573,7 @@ the same terms as the Perl 5 programming language system itself.
 
 =item *
 
-[INCOMPATIBLE CHANGES] Revise transaction specification. Introduce protocol version (v) and bump it to v=2. Require 'tx' feature to specify protocol version. Incompatibilities include: 1) transaction now no longer uses undo protocol but adapts mechanism from Perinci::Sub::Gen::Undoable (which will also be deprecated as the mechanism is now elevated into standards).
+[INCOMPATIBLE CHANGES] Revise transaction specification. Introduce protocol version (v) and bump it to v=2. Require 'tx' feature to specify protocol version. Incompatibilities include: 1) transaction now no longer uses undo protocol but adapts mechanism from Perinci::Sub::Gen::Undoable (which will also be deprecated as the mechanism is now elevated into standards); 2) TM object no longer needs to be passed to function, this should be safer; function now detects transaction using '-tx_action' special argument.
 
 =back
 
