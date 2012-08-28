@@ -1,6 +1,6 @@
 package Rinci::function; # just to make PodWeaver happy
 
-our $VERSION = '1.1.26'; # VERSION
+our $VERSION = '1.1.27'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your functions/methods
@@ -15,7 +15,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.26
+version 1.1.27
 
 =head1 SPECIFICATION VERSION
 
@@ -78,7 +78,9 @@ just one. It is more up to the tool and what you want to do with the metadata.
 =head2 Envelope status codes
 
 In general, status codes map directly to HTTP response status codes. Below are
-the suggestion on which codes to use (or avoid).
+the suggestion on which codes to use (or avoid). An asterisk (C<*>) marks which
+codes are not defined in HTTP specification and introduced by this
+specification.
 
 =over 4
 
@@ -86,7 +88,7 @@ the suggestion on which codes to use (or avoid).
 
 Currently not used.
 
-=item * 2xx code
+=item * 2xx code - success
 
 200 should be used to mean success.
 
@@ -96,7 +98,7 @@ when only partial file content is returned. But in general, use 200 as some
 callers will simply check for this exact code (instead of checking for range
 200-299).
 
-=item * 3xx code
+=item * 3xx code - further actions needs to be taken by user agent (caller)
 
 301 (moved) can be used to redirect callers to alternate location, although this
 is very rare.
@@ -105,7 +107,16 @@ is very rare.
 indicate that nothing is being modified or no modifying action has been
 performed (see Setup::* modules in CPAN).
 
-=item * 4xx code
+331* (confirmation required). Function requires confirmation, for example if
+action to be taken is dangerous or requires user's attention. Confirmation
+message/prompt from function can be returned in the message, or in the
+C<confirm_prompt> property (e.g. to provide translations). Confirmation from
+caller is in the form of special argument C<-confirm> with boolean value of true
+(TODO: A more detailed confirmation for different actions can be specified later
+in the form of C<-confirm_XXX> special arguments.) For an example of application
+of this, see L<Perinci::Tx::Manager>.
+
+=item * 4xx code - client (caller) side error
 
 400 (bad request, bad arguments) should be returned when the function encounters
 invalid input. A function wrapper can return this code when the function
@@ -139,13 +150,12 @@ authorization, use 401 and 403 respectively.
 
 429 (too many requests).
 
-480 codes are related to transaction. 480 is general transaction error, e.g.
-transaction status is aborted so further requests for this transaction is
-ignored until transaction is aborted.
+480* is general transaction error, e.g. transaction status is aborted so further
+requests for this transaction is ignored until transaction is aborted.
 
-484 (no such transaction).
+484* (no such transaction).
 
-=item * 5xx code
+=item * 5xx code - server (callee) side error
 
 500 is the general code to use when a failure occurs during the execution of a
 function. for example when a C<delete_file()> function fails to delete specified
@@ -162,9 +172,9 @@ Users should try again at a later time.
 
 521 (maximum retries reached)
 
-531 (bad metadata) is used when there is something wrong with the metadata.
+531* (bad metadata) is used when there is something wrong with the metadata.
 
-532 (failure in recording transaction) when there is a failure in updating
+532* (failure in recording transaction) when there is a failure in updating
 transaction status or in preparing/committing/rolling back the transaction.
 
 Try not to use code greater than 555, as some tools use (CODE-300) for error
@@ -329,7 +339,7 @@ By default, without any wrapper, the function is called with a named hash style:
  multiply2(a=>4, b=>3);  # 12
 
 But with the information from the metadata, a wrapper tool like
-Sub::Spec::Wrapper is able to change the calling style to positional:
+Perinci::Sub::Wrapper is able to change the calling style to positional:
 
  multiply2(4, 3.1, 1);  # 12
 
@@ -954,7 +964,7 @@ mechanism, e.g. an eval() block and alarm() in Perl).
 
 =head1 SEE ALSO
 
-Related specifications: L<Sah>
+Related specifications: L<Sah>, HTTP/1.1 (RFC 2068)
 
 L<Rinci>
 
