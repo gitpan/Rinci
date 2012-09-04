@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.28'; # VERSION
+our $VERSION = '1.1.29'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code entities
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.28
+version 1.1.29
 
 =head1 SPECIFICATION VERSION
 
@@ -540,6 +540,16 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =head1 CHANGES
+
+=head2 Version 1.1.29 (2012-09-04)
+
+=over 4
+
+=item *
+
+Transaction: In 'check_state' phase, specify that result message should contain a description of what needs to be fixed, or how it is already fixed, or how it is unfixable; the message can then be logged by TM to be displayed to user.
+
+=back
 
 =head2 Version 1.1.28 (2012-08-29)
 
