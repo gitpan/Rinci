@@ -4,7 +4,7 @@ use 5.010;
 use strict;
 use warnings;
 
-# VERSION
+our $VERSION = '1.1.30'; # VERSION
 
 # only validates metadata v1.1
 
@@ -126,4 +126,29 @@ our $variable = ['Rinci::metadata' => {
 
 1;
 # ABSTRACT: Schemas for Rinci metadata
+
+
+__END__
+=pod
+
+=head1 NAME
+
+Rinci::Schema - Schemas for Rinci metadata
+
+=head1 VERSION
+
+version 1.1.30
+
+=head1 AUTHOR
+
+Steven Haryanto <stevenharyanto@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2012 by Steven Haryanto.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
 
