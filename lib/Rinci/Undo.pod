@@ -1,6 +1,6 @@
 package Rinci::Undo; # just to make PodWeaver happy
 
-our $VERSION = '1.1.30'; # VERSION
+our $VERSION = '1.1.31'; # VERSION
 
 1;
 # ABSTRACT: (DEPRECATED) Protocol for undo operations in functions
@@ -15,7 +15,7 @@ Rinci::Undo - (DEPRECATED) Protocol for undo operations in functions
 
 =head1 VERSION
 
-version 1.1.30
+version 1.1.31
 
 =head1 SPECIFICATION VERSION
 

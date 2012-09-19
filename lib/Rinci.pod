@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.30'; # VERSION
+our $VERSION = '1.1.31'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code entities
@@ -15,7 +15,7 @@ Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.30
+version 1.1.31
 
 =head1 SPECIFICATION VERSION
 
@@ -44,13 +44,10 @@ B<Rinci> is a set of specifications of metadata for your code entities. Each
 different type of code entity, like function/method, variable, namespace, etc,
 has its own metadata specification.
 
-B<Metadata> is a set of name/value pairs stored in a regular mapping variable
-(a.k.a. hash in Perl/Ruby, or dictionary in Python, or array in PHP, or object
-in JavaScript/JSON; but from here on the term I<hash> will be used). Each
-specification will describe what metadata B<property names> (a.k.a. hash keys)
-are known and what value should each property contain. So the L<Rinci::function>
-specification will describe metadata for functions/methods, L<Rinci::package>
-will describe metadata for namespace/package, and so on.
+B<Metadata> is a defhash (see L<DefHash>). Each specification will specify what
+B<properties> should be supported. So the L<Rinci::function> specification will
+describe metadata for functions/methods, L<Rinci::package> will describe
+metadata for namespace/package, and so on.
 
 Rinci defines properties pertaining to documentation (like C<summary>,
 C<description>, C<examples>, C<links>), function argument and return value
@@ -83,12 +80,10 @@ with Rinci metadata. Automatically provide export tags (using information in the
 C<tags> property). Can automatically wrap functions using Perinci::Sub::Wrapper
 when exporting.
 
-=item * Perinci::Sub::To::* modules
+=item * Perinci::To::* modules
 
-Convert function metadata to user/API documentation in POD or other format.
-Basically all they do is just arranging the various available properties like
-C<summary>, C<description>, C<args>, C<result>, C<examples>, C<links> and so on
-and format them to the final target.
+Convert metadata to various other documents, for example L<Perinci::To::POD> to
+generate documentation.
 
 =item * L<Perinci::CmdLine>
 
@@ -187,25 +182,6 @@ object, library, application.
 
 This section describes specification common to all kinds of Rinci metadata.
 
-B<Metadata>. Metadata is just a normal hash. Each hash key is called a property.
-Any hash key in the metadata that starts with C<_> (underscore) is ignored, this
-can be used to store extra data, implementation-specific properties, or
-experimental (not yet standardized) properties. Otherwise, the property must be
-known and valid. A property is valid if the property name matches the regex
-pattern /\A[A-Za-z][A-Za-z0-9_]*([A-Za-z][A-Za-z0-9_]*)*\z/ (in other words, a
-word or a dotted word like "foo" or "foo.bar") and the name is known (listed in
-the specification), and the property values conform to the specification for
-that property.
-
-Metadata should be written in Unicode (UTF-8).
-
-B<Custom properties>. The specification is extensible: you can add properties of
-your own. Currently the mechanism to formally add a custom property to the
-specification is unspecified, but at least in Perl it is recommended that the
-distribution which does this updates the schema in C<Rinci::METATYPE::Schema>.
-Popular custom properties might make it into core specification in later
-revision or version.
-
 B<Where to put the metadata>. The specification does not specify where to put
 metadata in: it might be put alongside the code, separated in another source
 code, encoded in YAML/JSON, put in database, or whatever. It is up to the
@@ -218,9 +194,9 @@ B<Common properties>. Below are properties common to all metadata:
 
 =head3 Property: v => FLOAT (required)
 
-Declare specification version. This property is required. It should have the
-value of 1.1. If C<v> is not specified, it is assumed to be 1.0 and metadata is
-assumed to be the old, Sub::Spec 1.0.x metadata.
+From DefHash. Declare specification version. This property is required. It
+should have the value of 1.1. If C<v> is not specified, it is assumed to be 1.0
+and metadata is assumed to be the old, Sub::Spec 1.0.x metadata.
 
 Example:
 
@@ -243,8 +219,8 @@ this property value.
 
 =head3 Property: default_lang => STR
 
-Specify default language used in the text properties like C<summary> and
-C<description>. Default is 'en_US'.
+From DefHash. Specify default language used in the text properties like
+C<summary> and C<description>. Default is 'en_US'.
 
 To specify translation texts in other languages, you can use
 C<PROPERTY.alt.lang.CODE>, e.g.:
@@ -254,8 +230,8 @@ C<PROPERTY.alt.lang.CODE>, e.g.:
 
 =head3 Property: name => STR
 
-The name of the entity. Useful when aliasing entity (and reusing the metadata)
-and wanting to find out the canonical/original entity.
+From DefHash. The name of the entity. Useful when aliasing entity (and reusing
+the metadata) and wanting to find out the canonical/original entity.
 
 Examples:
 
@@ -264,8 +240,9 @@ Examples:
 
 =head3 Property: summary => STR
 
-A one-line summary. It should be plain text without any markup. Please limit to
-around 72 characters. It is like the C<summary> clause in L<Data::Sah>.
+From DefHash. A one-line summary. It should be plain text without any markup.
+Please limit to around 72 characters. It is like the C<summary> clause in
+L<Data::Sah>.
 
 Example:
 
@@ -284,9 +261,9 @@ C<schema> property.
 
 For function metadata, it should describe what the function does. Suggestion:
 use active, bare infinitive verb like in the example (not "Performs ..."). Avoid
-preamble like "This function ..." since that is redundant. Also avoid describing
-the arguments and its values like "..., accepts a single integer argument" as
-that should go to the C<args> property.
+preamble like "This function ..." or "Function to ..." since that is redundant.
+Also avoid describing the arguments and its values like "..., accepts a single
+integer argument" as that should go to the C<args> property.
 
 To specify translations in other language, use the L<summary.alt.lang.CODE>.
 Or change the C<default_lang> property. Examples:
@@ -303,9 +280,9 @@ Or change the C<default_lang> property. Examples:
 
 =head3 Property: tags => ARRAY OF (STR OR HASH)
 
-A list of tags, useful for categorization. Can also be used by tools, e.g.
-L<Perinci::Exporter> in Perl uses the C<tags> property of the function metadata
-as export tags.
+From DefHash. A list of tags, useful for categorization. Can also be used by
+tools, e.g. L<Perinci::Exporter> in Perl uses the C<tags> property of the
+function metadata as export tags.
 
 Tag can be a simple string or a tag metadata hash.
 
@@ -325,9 +302,9 @@ Example:
 
 =head3 Property: description => STR
 
-A longer description text. The text should be in marked up in format specified
-by C<text_markup> and is suggested to be formatted to 78 columns. It is like the
-C<description> Data::Sah clause.
+From DefHash. A longer description text. The text should be in marked up in
+format specified by C<text_markup> and is suggested to be formatted to 78
+columns. It is like the C<description> Data::Sah clause.
 
 To avoid redundancy, you should mentioning things that are already expressed as
 properties, for example: return value of function (specify it in C<result>
@@ -362,7 +339,7 @@ L<description.alt.lang.CODE> property.
 =head3 Property: links => ARRAY OF HASHES
 
 List to related entities or resources. Can be used to generate a SEE ALSO and/or
-LINKS sections in documentation. Each link is a hash with the following keys:
+LINKS sections in documentation. Each link is a defhash with the following keys:
 
 =over 4
 
@@ -377,13 +354,13 @@ A short plaintext title for the link.
 
 =item * description => STR
 
-A longer marked up text description for the link. Suggested to be formatted to
-76 columns.
+From DefHash. A longer marked up text description for the link. Suggested to be
+formatted to 76 columns.
 
 =item * tags => ARRAY OF (STR OR HASH)
 
-Can be used to categorize or select links. For generating SEE ALSO sections, use
-the tag 'see'.
+From DefHash. Can be used to categorize or select links. For generating SEE ALSO
+sections, use the tag 'see'.
 
 =back
 
@@ -401,28 +378,6 @@ Example:
          tags  => ['see'],
      },
  ],
-
-=head3 Property: text_markup => STR
-
-Specify text markup format for the content of properties which contain marked-up
-text, like C<description>. The default is C<markdown>
-(http://en.wikipedia.org/wiki/Markdown) and other valid values include C<org>
-(http://orgmode.org/) and C<none>.
-
-NOTE: Other popular text markup formats might be added in the future. Text
-format should be readable as-is (so-called "plain text markup format") as some
-tools, like L<Perinci::CmdLine> in Perl will just dump the content
-C<description> as text help message instead of going through the trouble of
-passing the content through some formatters.
-
- # use Org format for all marked up text
- text_markup => 'org'
-
-NOTE: Supporting different markup format for different properties, e.g.
-C<markdown> for C<description> but C<org> for other properties (or perhaps
-different format between arg's description and link's description) might be
-considered in the future if necessary, but for now such practice is not
-recommended.
 
 =head2 Entity-specific specifications
 
@@ -513,7 +468,9 @@ specification, requirements, and so on.
 
 =head2 Related specifications
 
-Sah schema language, L<Data::Sah>
+L<DefHash>
+
+Sah schema language, L<Sah>
 
 L<Riap>
 
@@ -538,562 +495,6 @@ This software is copyright (c) 2012 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
-
-=head1 CHANGES
-
-=head2 Version 1.1.30 (2012-09-07)
-
-=over 4
-
-=item *
-
-No spec changes. Rename back a file (Rinci/Schema.pm) that I thought
-
-=item *
-
-was not used (me--). [CT]
-
-=back
-
-=head2 Version 1.1.29 (2012-09-04)
-
-=over 4
-
-=item *
-
-Transaction: In 'check_state' phase, specify that result message should contain a description of what needs to be fixed, or how it is already fixed, or how it is unfixable; the message can then be logged by TM to be displayed to user.
-
-=back
-
-=head2 Version 1.1.28 (2012-08-29)
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGE] Transaction: To link between 'check_state' call and 'fix_state' call (e.g. function want to preserve some value between call), previously in 'fix_state' call TM passes '-tx_undo_actions' containing the undo actions from the 'check_state'. Now a simpler way is introduced to replace this: '-tx_action_id' containing a unique UUID (in 32-character hexdigit). BTW, '-tx_undo_actions' has not been implemented in Perinci::Tx::Manager, so the next release of Perinci::Tx::Manager will just implement '-tx_action_id'.
-
-=back
-
-=head2 Version 1.1.27 (2012-08-28)
-
-=over 4
-
-=item *
-
-Introduce status code 331.
-
-=item *
-
-Mark which status codes are in HTTP spec, which are introduced by us.
-
-=back
-
-=head2 Version 1.1.26 (2012-08-22)
-
-=over 4
-
-=item *
-
-Term change: call -> action.
-
-=back
-
-=head2 Version 1.1.25 (2012-08-22)
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGES] Remove properties 'use' and 'req' in 'tx' feature. This is to make things simpler. use=>1 is redundant, if function follows transaction protocol it means you can use it in transaction. req=>1 is also removed, all functions should just require transaction and potentially return 'do_actions'. A simple wrapper can be created to execute those actions without transaction, if wanted.
-
-=back
-
-=head2 Version 1.1.24 (2012-08-21)
-
-=over 4
-
-=item *
-
-[ENHANCEMENTS] Specify TM's interface in more details (moved from Riap::Transaction, which now becomes shorter).
-
-=item *
-
-[ENHANCEMENTS] Specify steps for action, rollback, and crash recovery in more details, with example.
-
-=back
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGES] Deprecate undo protocol, now undo should be implemented solely using transaction.
-
-=item *
-
-[INCOMPATIBLE CHANGES] Revise transaction specification. Introduce protocol version (v) and bump it to v=2. Require 'tx' feature to specify protocol version. Incompatibilities include: 1) transaction now no longer uses undo protocol but adapts mechanism from Perinci::Sub::Gen::Undoable (which will also be deprecated as the mechanism is now elevated into standards); 2) TM object no longer needs to be passed to function, this should be safer; function now detects transaction using '-tx_action' special argument.
-
-=back
-
-=head2 Version 1.1.23 (2012-08-14)
-
-=over 4
-
-=item *
-
-Major rewrite of transaction specification.
-
-=item *
-
-The main motivation is to remove the concept of 'steps' as this is a
-
-=item *
-
-false dichotomy. Steps are actually functions themselves, the units of
-
-=item *
-
-work are still functions. Eventually, a complex system will need to
-
-=item *
-
-nest functions inside functions, to more than two levels of nesting.
-
-=item *
-
-Why divide and limit into two levels (function-step)? So:
-
-=item *
-
-Everything is a bit clearer now
-
-=item *
-
-$tm interface is saner ($tm->call, easier to call function inside another)
-
-=item *
-
-No more mention of unused transaction status: e
-
-=item *
-
-New transaction statuses: v (rollback of undoing process), e (rollback of redoing process).
-
-=item *
-
-Recovery does not always means rollback (to R). For transactions in u and d status, we continue the undoing/redoing. For transactions in v and e status, we continue the rollback to final status C and U, respectively.
-
-=back
-
-=head2 Version 1.1.22 (2012-08-09)
-
-=over 4
-
-=item *
-
-tx: Describe the ordering of calls during undo/rollback/redo when there is nested call. The same function may be called twice or more with parts of undo/redo steps.
-
-=item *
-
-tx: In transaction mode, function now gets undo/redo data from the usual -undo_data special argument, like in non-transaction mode. Txm's API get_undo_steps() and get_redo_steps() are now removed.
-
-=back
-
-=head2 Version 1.1.21 (2012-07-23)
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGES] function: Remove argument specification key 'src', use 'cmdline_src' instead. I think 'src' is too general.
-
-=back
-
-=head2 Version 1.1.20 (2012-07-21)
-
-=over 4
-
-=item *
-
-function: Add argument specification keys 'src' and 'cmdline_src'.
-
-=back
-
-=head2 Version 1.1.19 (2012-06-22)
-
-=over 4
-
-=item *
-
-Adjust transaction status labels. Final statuses are now in uppercase:
-
-=item *
-
-C, R, U, X; while transient statuses are in lowercase: i, a, u, d, e.
-
-=item *
-
-Add response status 429 (too many requests).
-
-=back
-
-=head2 Version 1.1.18 (2012-06-06)
-
-=over 4
-
-=item *
-
-Refinements to transaction details.
-
-=item *
-
-Remove dependency clause 'undo_storage'. Add dependency clauses
-
-=item *
-
-'tmp_dir', 'trash_dir', 'undo_trash_dir'.
-
-=back
-
-=head2 Version 1.1.17 (2012-05-31)
-
-=over 4
-
-=item *
-
-Specify transactional system (Rinci::function::Transaction). Split
-
-=item *
-
-specification for undo to Rinci::function::Undo and specify undo/redo
-
-=item *
-
-protocol under transaction.
-
-=back
-
-=head2 Version 1.1.16 (2012-05-03)
-
-=over 4
-
-=item *
-
-Refine undo protocol documentation. Specify interaction with
-
-=item *
-
-undo/transaction manager. '-undo_hint' is now replaced by
-
-=item *
-
-'-undo_storage'. Declare 'undo_storage' dependency clause.
-
-=back
-
-=head2 Version 1.1.15 (2012-05-02)
-
-=over 4
-
-=item *
-
-No functional changes.
-
-=back
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGE] Update Sah schema syntax (pre-0.03, [merge:X] -> [mergeX])
-
-=back
-
-=head2 Version 1.1.14 (2012-05-02)
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGE] Change 'exec' dependency clause to 'prog' (avoid possible confusion because 'exec' can imply that we need to execute the program; there can be other future dep clause for that).
-
-=back
-
-=head2 Version 1.1.13 (2012-03-23)
-
-=over 4
-
-=item *
-
-[ENHANCEMENTS] Each tag in 'tags' property can also be a tag metadata hash (for
-
-=item *
-
-[ENHANCEMENTS] translatable message, etc).
-
-=back
-
-=head2 Version 1.1.12 (2012-03-13)
-
-=over 4
-
-=item *
-
-[ENHANCEMENTS] Add 'Rinci::result'.
-
-=back
-
-=head2 Version 1.1.11 (2012-03-13)
-
-=over 4
-
-=item *
-
-[ENHANCEMENTS] Add property 'entity_version'.
-
-=back
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGES] package: Remove property 'pkg_version' (use 'entity_version'
-
-=item *
-
-[INCOMPATIBLE CHANGES] instead).
-
-=back
-
-=head2 Version 1.1.10 (2012-02-28)
-
-=over 4
-
-=item *
-
-function: arg spec 'aliases': Add alias spec 'schema'
-
-=back
-
-=head2 Version 1.1.9 (2012-02-28)
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGE] function: Change (back) 'set' alias spec to 'code', in arg spec
-
-=item *
-
-[INCOMPATIBLE CHANGE] 'aliases' (for backward compatibility with 1.0)
-
-=back
-
-=head2 Version 1.1.8 (2012-02-28)
-
-=over 4
-
-=item *
-
-[INCOMPATIBLE CHANGES] function: Replace (back) 'alias_for' argument spec with
-
-=item *
-
-[INCOMPATIBLE CHANGES] 'cmdline_aliases'. I first used 'alias_for' so I can list each alias as
-
-=item *
-
-[INCOMPATIBLE CHANGES] a key in 'args' property. The goal is so I can get all argument names
-
-=item *
-
-[INCOMPATIBLE CHANGES] aliases) simply by doing a keys() on 'args' hash. And the goal of
-
-=item *
-
-[INCOMPATIBLE CHANGES] that is to add a 'complete_arg_name' Riap action which is more
-
-=item *
-
-[INCOMPATIBLE CHANGES] lightweight than a full 'meta' just to get argument names. Turns out
-
-=item *
-
-[INCOMPATIBLE CHANGES] that I don't need 'alias_for' just to support 'complete_arg_name', and
-
-=item *
-
-[INCOMPATIBLE CHANGES] also turns out that completing argument name needs more than just all
-
-=item *
-
-[INCOMPATIBLE CHANGES] argument names + aliases. You also need 'pos' information. So a full
-
-=item *
-
-[INCOMPATIBLE CHANGES] 'meta' is currently used. The reason I now revert to 'cmdline_aliases'
-
-=item *
-
-[INCOMPATIBLE CHANGES] style is because I don't want command-line aliases to become
-
-=item *
-
-[INCOMPATIBLE CHANGES] full/first-class argument.
-
-=back
-
-=head2 Version 1.1.7 (2012-02-23)
-
-=over 4
-
-=item *
-
-package: Add property 'pkg_version'.
-
-=back
-
-=head2 Version 1.1.6 (2012-02-21)
-
-=over 4
-
-=item *
-
-function: Add 'alias_for' argument specification.
-
-=back
-
-=head2 Version 1.1.5 (2012-02-10)
-
-=over 4
-
-=item *
-
-No spec changes.
-
-=item *
-
-Add Rinci::Schema.
-
-=back
-
-=head2 Version 1.1.4 (2012-02-01)
-
-=over 4
-
-=item *
-
-Declare that 1.1 series might introduce minor backward compatibility problems between revisions.
-
-=item *
-
-Rename 'arg_pass_style' and 'result_envelope' to the old (Sub::Spec-era) 'args_as' and 'result_naked'. New names are not better.
-
-=item *
-
-Code entity URI now moved to Riap specification as the 'riap' URI scheme.
-
-=item *
-
-Some minor revisions.
-
-=back
-
-=head2 Version 1.1.3 (2012-01-27)
-
-=over 4
-
-=item *
-
-Change syntax of code entity URI, from 'Pkg.SubPkg.func' to 'pm:/Pkg/SubPkg/func' (or 'py:', 'php:', and so on).
-
-=item *
-
-Some minor revisions like wording and paragraph reorganization.
-
-=back
-
-=head2 Version 1.1.2 (2012-01-19)
-
-=over 4
-
-=item *
-
-Add 'default_lang' property. Add guidelines on what to put in 'summary' and 'description'.
-
-=item *
-
-variable: Add 'schema' property.
-
-=back
-
-=head2 Version 1.1.1 (2012-01-18)
-
-=over 4
-
-=item *
-
-No spec changes. Update module names (Rinci::HTTP -> Riap, Rias ->
-
-=item *
-
-Perinci). Add documents Rinci::Upgrading and Rinci::Tutorial (stub).
-
-=back
-
-=head2 Version 1.1.0 (2012-01-15)
-
-=over 4
-
-=item *
-
-First release. Spun off from Sub::Spec.
-
-=item *
-
-Incompatible differences with Sub::Spec 1.0.x:
-
-=item *
-
-Terminology: 'spec clause' becomes 'property'. This is to avoid confusion with 'clause' as used in Sah schema language.
-
-=item *
-
-Default text markup format changed from Org to Markdown, but a new properties 'text_markup' is added to allow specifying 'org' or 'markdown' (or 'none').
-
-=item *
-
-'v' clause is now required to declare Rinci spec version (with value 1.1, if unspecified then assumed spec is old Sub::Spec 1.0).
-
-=item *
-
-function: Incompatible changes to 'args' and 'result' properties; 'args' is now a hash of arg names and arg *specs* (instead of arg schemas). 'result' is now a hash of data, instead of schema. The purpose is to keep Sah schema clean from custom, non-schema-related schema clauses, like arg_* (thus requiring custom Sah extensions, etc). Mixing them into schemas was not the right way.
-
-=item *
-
-function: property 'type' removed, replaced with 'is_func', 'is_meth', 'is_static_meth'. This is because a single subroutine/function can act as all.
-
-=item *
-
-function: Other properties which are also removed/replaced: 'timeout' (non-core), 'retry' (non-core), 'scope' (can be replaced by using tags), 'result_naked' (replaced by 'result_envelope'), 'args_as' (replaced by 'arg_pass_style').
-
-=item *
-
-function: property 'deps': terminology change ('dep clause' -> 'dep type'), rename dep types: 'sub' -> 'func', 'mod' -> 'perl_module'.
-
-=item *
-
-Additions:
-
-=item *
-
-Keys beginning with "_" are allowed and ignored. This can be used to store extra information.
-
-=item *
-
-New properties: 'tags', 'links', 'examples'.
-
-=back
 
 =cut
 
