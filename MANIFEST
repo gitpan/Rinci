@@ -9,7 +9,6 @@ README
 dist.ini
 lib/Rinci.pm
 lib/Rinci.pod
-lib/Rinci/Schema.pm
 lib/Rinci/Transaction.pod
 lib/Rinci/Undo.pod
 lib/Rinci/Upgrading.pod
