@@ -1,6 +1,6 @@
 package Rinci::function; # just to make PodWeaver happy
 
-our $VERSION = '1.1.31'; # VERSION
+our $VERSION = '1.1.32'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your functions/methods
@@ -15,7 +15,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.31
+version 1.1.32
 
 =head1 SPECIFICATION VERSION
 
@@ -490,10 +490,6 @@ Specify function return value. It is a defhash containing keys:
 
 =over 4
 
-=item * B<schema>
-
-A Sah schema to validate the result
-
 =item * B<summary>
 
 From DefHash. Like the C<summary> property in variable metadata.
@@ -502,6 +498,22 @@ From DefHash. Like the C<summary> property in variable metadata.
 
 From DefHash. Like the C<description> property. Suggested to be formatted to 78
 columns.
+
+=item * B<schema> => SCHEMA
+
+A Sah schema to validate the result (the third element in the envelope result).
+This schema should only be tested if status is 200. See also: C<statuses>.
+
+=item * B<statuses> => HASH
+
+Can be used to specify different result schema for different statuses. For
+example:
+
+ statuses => {
+     206 => {
+         schema => 'str*',
+     },
+ }
 
 =back
 
@@ -705,7 +717,7 @@ memoization. An example of an immutable function is C<sub { $_[0]+$_[1] }> where
 its results only depend on the arguments. Example of a mutable function would be
 C<rand()> or C<read()> that reads contents from a file.
 
-=item feature: idempotent => BOOL
+=item * feature: idempotent => BOOL
 
 Default is false. If set to true, specifies that function is idempotent.
 Idempotency means that repeated invocation of a function (each with the same
