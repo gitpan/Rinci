@@ -1,6 +1,6 @@
 package Rinci::function; # just to make PodWeaver happy
 
-our $VERSION = '1.1.33'; # VERSION
+our $VERSION = '1.1.34'; # VERSION
 
 1;
 # ABSTRACT: Metadata for your functions/methods
@@ -15,7 +15,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.33
+version 1.1.34
 
 =head1 SPECIFICATION VERSION
 
@@ -150,6 +150,12 @@ authorization, use 401 and 403 respectively.
 
 429 (too many requests).
 
+(EXPERIMENTAL) 44x codes are reserved for function-specific codes. Each function
+is free to define what each number means. However, this is not really encouraged
+and should only be used if necessary. Function should perhaps stick to
+predefined codes here. To return more detailed status, result metadata can be
+used.
+
 480* is general transaction error, e.g. transaction status is aborted so further
 requests for this transaction is ignored until transaction is aborted.
 
@@ -176,6 +182,12 @@ Users should try again at a later time.
 
 532* (failure in recording transaction) when there is a failure in updating
 transaction status or in preparing/committing/rolling back the transaction.
+
+(EXPERIMENTAL) 54x codes are reserved for function-specific codes. Each function
+is free to define what each number means. However, this is not really encouraged
+and should only be used if necessary. Function should perhaps stick to
+predefined codes here. To return more detailed status, result metadata can be
+used.
 
 Try not to use code greater than 555, as some tools use (CODE-300) for error
 codes that must fit in one unsigned byte (like L<Perinci::CmdLine>).
