@@ -17,13 +17,13 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Rinci",
-  "dist_version" => "1.1.34",
+  "dist_version" => "1.1.35",
   "license" => "perl",
   "module_name" => "Rinci",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
-    "DefHash" => "v1.0.1"
+    "DefHash" => "v1.0.3"
   },
   "script_files" => []
 );

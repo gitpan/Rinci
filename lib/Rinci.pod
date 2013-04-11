@@ -1,6 +1,6 @@
 package Rinci; # just to make PodWeaver happy
 
-our $VERSION = '1.1.34'; # VERSION
+# VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code entities
@@ -9,13 +9,15 @@ our $VERSION = '1.1.34'; # VERSION
 __END__
 =pod
 
+=encoding utf-8
+
 =head1 NAME
 
 Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.34
+version 1.1.35
 
 =head1 SPECIFICATION VERSION
 
@@ -38,7 +40,11 @@ The 1.1 series does not guarantee full backward compatibility between revisions,
 so caveat implementor. However, major incompatibility will bump the version to
 1.2 or 2.0.
 
-=head1 WHAT IS RINCI? (TERMINOLOGIES)
+=head1 TERMINOLOGIES
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
+"SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+interpreted as described in RFC 2119.
 
 B<Rinci> is a set of specifications of metadata for your code entities. Each
 different type of code entity, like function/method, variable, namespace, etc,
@@ -381,6 +387,25 @@ Example:
      },
  ],
 
+=head3 Property: x => ANY
+
+From DefHash. This property is used to store extended (application-specific)
+attributes, much like the C<X-> prefix in HTTP or email headers. This property
+can be used as an alternative to using underscore prefix (e.g. C<_foo>). Some
+processing tools strip properties/attributes that begin with underscores, so to
+pass extended metadata around, it might be more convenient to use the C<x>
+property.
+
+It is recommended that you put an application prefix.
+
+Example:
+
+ "x.myapp.foo" => "some value",
+
+Another example:
+
+ "x.dux.strip_newlines" => 0,
+
 =head2 Entity-specific specifications
 
 Each entity-specific specification is described on a separate subdocument.
@@ -493,7 +518,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Steven Haryanto.
+This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
