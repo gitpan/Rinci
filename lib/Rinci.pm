@@ -1,11 +1,12 @@
 package Rinci;
 
-our $VERSION = '1.1.35'; # VERSION
+our $VERSION = '1.1.36'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
 
 __END__
+
 =pod
 
 =encoding utf-8
@@ -16,7 +17,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.35
+version 1.1.36
 
 =head1 AUTHOR
 
@@ -37,4 +38,3 @@ the same terms as the Perl 5 programming language system itself.
 None are exported by default, but they are exportable.
 
 =cut
-

@@ -5,8 +5,8 @@ package Rinci::Upgrading; # just to make PodWeaver happy
 1;
 # ABSTRACT: Upgrading from previous version of specification
 
-
 __END__
+
 =pod
 
 =encoding utf-8
@@ -17,7 +17,7 @@ Rinci::Upgrading - Upgrading from previous version of specification
 
 =head1 VERSION
 
-version 1.1.35
+version 1.1.36
 
 =head1 DESCRIPTION
 
@@ -113,4 +113,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
