@@ -17,7 +17,7 @@ Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.37
+version 1.1.38
 
 =head1 SPECIFICATION VERSION
 
