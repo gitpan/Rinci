@@ -17,7 +17,7 @@ Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-version 1.1.36
+version 1.1.37
 
 =head1 SPECIFICATION VERSION
 
@@ -222,9 +222,9 @@ Example:
  entity_v => 0.24
 
 In Perl, modules usually put version numbers in package variable called
-C<$VERSION>. If not set, tools like L<Perinci::Access::InProcess> automatically
-fills this property from that variable, to relieve authors from manually setting
-this property value.
+C<$VERSION>. If not set, tools like L<Perinci::Access::Perl> automatically fills
+this property from that variable, to relieve authors from manually setting this
+property value.
 
 =head3 Property: default_lang => STR
 
