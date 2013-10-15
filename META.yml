@@ -3,9 +3,10 @@ abstract: 'Language-neutral metadata for your code'
 author:
   - 'Steven Haryanto <stevenharyanto@gmail.com>'
 build_requires:
-  Capture::Tiny: 0
-  Test::More: 0.88
-  blib: 0
+  File::Spec: 0
+  IO::Handle: 0
+  IPC::Open3: 0
+  Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
@@ -20,4 +21,4 @@ requires:
 resources:
   homepage: http://metacpan.org/release/Rinci
   repository: http://github.com/sharyanto/perl-Rinci
-version: 1.1.38
+version: 1.1.39

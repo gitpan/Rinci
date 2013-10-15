@@ -17,7 +17,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.38
+version 1.1.39
 
 =head1 SPECIFICATION VERSION
 
@@ -279,8 +279,8 @@ situation where arguments are parsed from command-line-like options). Keys are
 alias names, values are itself hashes (alias specification). Valid alias
 specification keys: C<summary> (a string, optional), C<schema> (optional,
 defaults to argument's schema), C<code> (a code to set argument value, optional,
-will be given reference to arguments hash; if not set, the default behavior is
-simply to set the argument value).
+will be given C<< (\%args, $val) >>); if not set, the default behavior is simply
+to set the argument value).
 
 =item * B<completion> => CODE
 
@@ -567,31 +567,55 @@ to true, and the wrapper can generate the envelope for the functions.
 
 =head2 Property: examples => ARRAY
 
-This property allowed you to put examples in a detailed and structured way, as
-an alternative to putting everything in C<description>.
+This property allows you to put examples in a detailed and structured way, as an
+alternative to putting everything in C<description>.
 
 Each example is a defhash, it specifies what arguments are used, what the
 results are, and some description. It can be used when generating API/usage
-documentation, as well as for testing data. Known properties:
+documentation, as well as for testing data. It can also be used for testing
+(function will be run with specified arguments and the result will be matched
+against expected result). Known properties:
 
 =over 4
 
 =item * args => HASH
 
-Arguments used to produce result.
+Arguments used to produce result. Can be converted to C<argv> by tool, e.g. when
+displaying command-line eamples
 
 =item * argv => ARRAY
 
-An alternative to C<args>, for example when function is run from the command
-line.
+An alternative to C<args>, for example when function is run from the
+command-line. Can be converted to C<args> most of the time when wanting to
+display examples in Perl instead of command-line.
 
-=item * status => INT
+=item * src => STR
+
+An alternative to C<args> or C<argv>, to provide raw source code. See also:
+C<src_plang>. This can be used to show more general examples. For example, you
+can show how a function is used in an expression or code block, or how a
+command-line program is used in a shell script.
+
+Exactly one of C<args>, C<argv>, or C<src> must be specified.
+
+=item * src_plang => STR
+
+The programming language the examples source code C<src> is written in. Valid
+values include: C<perl>, C<bash>.
+
+Command-line interface tools will typically only show examples written in
+C<bash> or other shells, while Perl module tools will typically only show
+C<perl> examples.
+
+Required if C<src> is specified.
+
+=item * status => INT (default: 200)
 
 Status from envelope. If unspecified, assumed to be 200.
 
 =item * result => DATA
 
-Result data.
+Expected result.
 
 =item * summary => STR
 
@@ -600,10 +624,14 @@ phrase or sentence, what the example tries to demonstrate. You can skip the
 summary if the example is pretty basic or things are already clear from the
 C<args> alone.
 
-=item * description => STR.
+=item * description => STR
 
 From DefHash. Longer marked up text about the example (e.g. discussion or things
 to note), suggested to be formatted to 72 columns.
+
+=item * tags => ARRAY
+
+From DefHash.
 
 =back
 
@@ -617,14 +645,33 @@ Example:
          # summary no needed here, already clear.
      },
      {
+         args => {},
+         result => 400,
+         summary => 'Num argument is required',
+     },
+
+     {
          argv => [-5],
          result => 1,
          summary => 'Also works for negative integers',
      },
+ ],
+
+Another example demonstrating C<src> for a function called C<list_countries>:
+
+ examples => [
      {
-         args => {},
-         result => 400,
-         summary => 'Num argument is required',
+         src => 'for c in `list-countries`; do wget http://flags.org/country/$c; done',
+         src_plang => 'bash',
+     },
+     {
+         src => <<'EOT',
+ my $res = list_countries(detail => 1, sort=>['-popsize']);
+ die "Can't list countries: $res->[0] - $res->[1]" unless $res->[0] == 200;
+ my $i = 0;
+ for my $c (@{ $res->[2] }) { $i++; say "$i. $_->{name}'s population: $_->{popsize}";
+ EOT
+         src_plang => 'perl',
      },
  ],
 
