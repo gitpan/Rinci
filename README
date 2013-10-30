@@ -1,8 +1,19 @@
 NAME
     Rinci - Language-neutral metadata for your code
 
-VERSION
-    version 1.1.39
+HOMEPAGE
+    Please visit the project's homepage at
+    <https://metacpan.org/release/Rinci>.
+
+SOURCE
+    Source repository is at <https://github.com/sharyanto/perl-Rinci>.
+
+BUGS
+    Please report any bugs or feature requests on the bugtracker website
+    http://rt.cpan.org/Public/Dist/Display.html?Name=Rinci
+
+    When submitting a bug or request, please include a test-file or a patch
+    to an existing test-file that illustrates the bug or desired feature.
 
 AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
@@ -12,8 +23,4 @@ COPYRIGHT AND LICENSE
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.
-
-DESCRIPTION
-FUNCTIONS
-    None are exported by default, but they are exportable.
 
