@@ -15,6 +15,10 @@ __END__
 
 Rinci::result - Function/method result metadata
 
+=head1 VERSION
+
+version 1.1.41
+
 =head1 SPECIFICATION VERSION
 
  1.1
@@ -40,8 +44,8 @@ breaking format of existing result (to maintain API compatibility). The
 attributes after C<func.> is up to the respective function. An example is the
 C<get_args_from_argv()> function in the L<Perinci::Sub::GetArgs::Argv> Perl
 module. The function returns C<$args> but from v0.26 it also wants to give hints
-about the existence of missing arguments. It can do this via
-C<func.has_missing_arg> result metadata.
+about whether or not there are missing arguments. It can do this via
+C<func.missing_arg> result metadata.
 
 =head2 Properties: cmdline.*
 
@@ -128,7 +132,7 @@ Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-http://rt.cpan.org/Public/Dist/Display.html?Name=Rinci
+L<https://rt.cpan.org/Public/Dist/Display.html?Name=Rinci>
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
