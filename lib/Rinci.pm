@@ -1,6 +1,6 @@
 package Rinci;
 
-our $VERSION = '1.1.43'; # VERSION
+our $VERSION = '1.1.44'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -17,7 +17,11 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-version 1.1.43
+version 1.1.44
+
+=head1 RELEASE DATE
+
+2014-04-27
 
 =head1 HOMEPAGE
 
@@ -41,7 +45,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

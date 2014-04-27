@@ -2,7 +2,10 @@ NAME
     Rinci - Language-neutral metadata for your code
 
 VERSION
-    version 1.1.43
+    version 1.1.44
+
+RELEASE DATE
+    2014-04-27
 
 HOMEPAGE
     Please visit the project's homepage at
@@ -22,7 +25,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2013 by Steven Haryanto.
+    This software is copyright (c) 2014 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

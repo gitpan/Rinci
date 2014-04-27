@@ -17,7 +17,11 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-version 1.1.43
+version 1.1.44
+
+=head1 RELEASE DATE
+
+2014-04-27
 
 =head1 SPECIFICATION VERSION
 
@@ -336,29 +340,6 @@ but there is no way to know the order of options being specified in the
 command-line. With the hooks, the function can load modules correctly (e.g.
 loading C<mod1> won't search in C<dir2> as that directory has not been added by
 -I).
-
-=item * B<cmdline_on_getarg> => CODE
-
-Like C<cmdline_on_getopt> but will be called when argument is specified as a
-command-line argument. For example:
-
- args => {
-     foo => {
-         schema            => ['array*' => of => 'str*'],
-         pos               => 0,
-         greedy            => 1,
-         cmdline_on_getopt => sub { ... },
-         cmdline_on_getarg => sub { ... },
-     },
-     bar => { ... },
- },
-
-and the command-line argument:
-
- --foo o1 --bar o2 --foo o3 a1 a2
-
-The C<cmdline_on_getopt> hook will be called twice for C<o1> and C<o3>, while
-the C<cmdline_on_getarg> hook will be called twice with C<a1> and C<a2>.
 
 =item * B<completion> => CODE
 
@@ -1198,7 +1179,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Steven Haryanto.
+This software is copyright (c) 2014 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
