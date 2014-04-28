@@ -17,11 +17,7 @@ Rinci::Undo - (DEPRECATED) Protocol for undo operations in functions
 
 =head1 VERSION
 
-version 1.1.44
-
-=head1 RELEASE DATE
-
-2014-04-27
+This document describes version 1.1.45 of module Rinci::Undo (in distribution Rinci), released on 2014-04-28.
 
 =head1 SPECIFICATION VERSION
 

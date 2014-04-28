@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.44'; # VERSION
-our $DATE = '2014-04-27'; # DATE
+our $VERSION = '1.1.45'; # VERSION
+our $DATE = '2014-04-28'; # DATE
 
 our %SCHEMAS;
 
@@ -25,7 +25,15 @@ $SCHEMAS{rinci} = [hash => {
         entity_v => {},
         links => {
             _elem_prop => {
-                # XXX include from defhash
+                # from defhash
+                v => {},
+                defhash_v => {},
+                name => {},
+                summary => {},
+                description => {},
+                tags => {},
+                default_lang => {},
+                x => {},
 
                 uri => {},
                 title => {},
@@ -55,7 +63,7 @@ $SCHEMAS{rinci_function} = [hash => {
         is_meth => {},
         is_class_meth => {},
         args => {
-            _elem_prop => {
+            _value_prop => {
                 # from defhash
                 summary => {},
                 description => {},
@@ -82,7 +90,7 @@ $SCHEMAS{rinci_function} = [hash => {
 
                 schema => {},
                 statuses => {
-                    _val_prop => {
+                    _value_prop => {
                         # from defhash
                         summary => {},
                         description => {},
@@ -110,7 +118,7 @@ $SCHEMAS{rinci_function} = [hash => {
             },
         },
         features => {
-            _prop => {
+            _keys => {
                 reverse => {},
                 tx => {},
                 dry_run => {},
@@ -120,7 +128,7 @@ $SCHEMAS{rinci_function} = [hash => {
             },
         },
         deps => {
-            _prop => {
+            _keys => {
                 all => {},
                 any => {},
                 none => {},
@@ -138,7 +146,6 @@ $SCHEMAS{rinci_function} = [hash => {
 # rinci_variable
 # rinci_result
 
-
 1;
 # ABSTRACT: Sah schemas for Rinci metadata
 
@@ -154,11 +161,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-version 1.1.44
-
-=head1 RELEASE DATE
-
-2014-04-27
+This document describes version 1.1.45 of module Sah::Schema::Rinci (in distribution Rinci), released on 2014-04-28.
 
 =head1 HOMEPAGE
 
