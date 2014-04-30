@@ -17,7 +17,7 @@ Rinci::result - Function/method result metadata
 
 =head1 VERSION
 
-This document describes version 1.1.45 of module Rinci::result (in distribution Rinci), released on 2014-04-28.
+This document describes version 1.1.46 of Rinci::result (from Perl distribution Rinci), released on 2014-04-30.
 
 =head1 SPECIFICATION VERSION
 
