@@ -4,36 +4,31 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.46'; # VERSION
-our $DATE = '2014-04-30'; # DATE
+our $VERSION = '1.1.47'; # VERSION
+our $DATE = '2014-05-01'; # DATE
 
 our %SCHEMAS;
+
+my %dh_props = (
+    v => {},
+    defhash_v => {},
+    name => {},
+    summary => {},
+    description => {},
+    tags => {},
+    default_lang => {},
+    x => {},
+);
 
 $SCHEMAS{rinci} = [hash => {
     # tmp
     _prop => {
-        # from defhash
-        v => {},
-        defhash_v => {},
-        name => {},
-        summary => {},
-        description => {},
-        tags => {},
-        default_lang => {},
-        x => {},
+        %dh_props,
 
         entity_v => {},
         links => {
             _elem_prop => {
-                # from defhash
-                v => {},
-                defhash_v => {},
-                name => {},
-                summary => {},
-                description => {},
-                tags => {},
-                default_lang => {},
-                x => {},
+                %dh_props,
 
                 uri => {},
                 title => {},
@@ -45,15 +40,7 @@ $SCHEMAS{rinci} = [hash => {
 $SCHEMAS{rinci_function} = [hash => {
     # tmp
     _prop => {
-        # from defhash
-        v => {},
-        defhash_v => {},
-        name => {},
-        summary => {},
-        description => {},
-        tags => {},
-        default_lang => {},
-        x => {},
+        %dh_props,
 
         # from common rinci metadata
         entity_v => {},
@@ -64,11 +51,7 @@ $SCHEMAS{rinci_function} = [hash => {
         is_class_meth => {},
         args => {
             _value_prop => {
-                # from defhash
-                summary => {},
-                description => {},
-                tags => {},
-                x => {},
+                %dh_props,
 
                 schema => {},
                 default => {},
@@ -92,11 +75,7 @@ $SCHEMAS{rinci_function} = [hash => {
         args_as => {},
         result => {
             _prop => {
-                # from defhash
-                summary => {},
-                description => {},
-                tags => {},
-                x => {},
+                %dh_props,
 
                 schema => {},
                 statuses => {
@@ -113,11 +92,7 @@ $SCHEMAS{rinci_function} = [hash => {
         result_naked => {},
         examples => {
             _elem_prop => {
-                # from defhash
-                summary => {},
-                description => {},
-                tags => {},
-                x => {},
+                %dh_props,
 
                 args => {},
                 argv => {},
@@ -172,7 +147,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.46 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-04-30.
+This document describes version 1.1.47 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-05-01.
 
 =head1 HOMEPAGE
 

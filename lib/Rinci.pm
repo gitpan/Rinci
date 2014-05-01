@@ -1,6 +1,6 @@
 package Rinci;
 
-our $VERSION = '1.1.46'; # VERSION
+our $VERSION = '1.1.47'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -17,7 +17,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-This document describes version 1.1.46 of Rinci (from Perl distribution Rinci), released on 2014-04-30.
+This document describes version 1.1.47 of Rinci (from Perl distribution Rinci), released on 2014-05-01.
 
 =head1 HOMEPAGE
 
