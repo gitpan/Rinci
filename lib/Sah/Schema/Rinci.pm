@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.49'; # VERSION
-our $DATE = '2014-06-13'; # DATE
+our $VERSION = '1.1.50'; # VERSION
+our $DATE = '2014-06-14'; # DATE
 
 our %SCHEMAS;
 
@@ -53,7 +53,6 @@ $SCHEMAS{rinci_function} = [hash => {
             _value_prop => {
                 %dh_props,
 
-                as => {},
                 schema => {},
                 default => {},
                 req => {},
@@ -73,12 +72,11 @@ $SCHEMAS{rinci_function} = [hash => {
                 cmdline_src => {},
             },
         },
-        args_as => {}, # OLD 1.1.48-, replaced with args/as, will be removed in the future
+        args_as => {},
         result => {
             _prop => {
                 %dh_props,
 
-                is_naked => {},
                 schema => {},
                 statuses => {
                     _value_prop => {
@@ -91,7 +89,7 @@ $SCHEMAS{rinci_function} = [hash => {
                 },
             },
         },
-        result_naked => {}, # OLD 1.1.48-, replaced with result/is_naked, will be removed in the future
+        result_naked => {},
         examples => {
             _elem_prop => {
                 %dh_props,
@@ -151,7 +149,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.49 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-06-13.
+This document describes version 1.1.50 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-06-14.
 
 =head1 HOMEPAGE
 
