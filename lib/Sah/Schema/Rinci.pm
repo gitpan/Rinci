@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.50'; # VERSION
-our $DATE = '2014-06-14'; # DATE
+our $VERSION = '1.1.51'; # VERSION
+our $DATE = '2014-06-25'; # DATE
 
 our %SCHEMAS;
 
@@ -26,6 +26,7 @@ $SCHEMAS{rinci} = [hash => {
         %dh_props,
 
         entity_v => {},
+        entity_date => {},
         links => {
             _elem_prop => {
                 %dh_props,
@@ -44,6 +45,7 @@ $SCHEMAS{rinci_function} = [hash => {
 
         # from common rinci metadata
         entity_v => {},
+        entity_date => {},
         links => {},
 
         is_func => {},
@@ -149,7 +151,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.50 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-06-14.
+This document describes version 1.1.51 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-06-25.
 
 =head1 HOMEPAGE
 
