@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.52'; # VERSION
-our $DATE = '2014-06-29'; # DATE
+our $VERSION = '1.1.53'; # VERSION
+our $DATE = '2014-09-11'; # DATE
 
 our %SCHEMAS;
 
@@ -60,6 +60,7 @@ $SCHEMAS{rinci_function} = [hash => {
                 req => {},
                 pos => {},
                 greedy => {},
+                is_password => {},
                 cmdline_aliases => {
                     _value_prop => {
                         summary => {},
@@ -69,6 +70,7 @@ $SCHEMAS{rinci_function} = [hash => {
                     },
                 },
                 cmdline_on_getopt => {},
+                cmdline_prompt => {},
                 completion => {},
                 element_completion => {},
                 cmdline_src => {},
@@ -151,7 +153,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.52 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-06-29.
+This document describes version 1.1.53 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-09-11.
 
 =head1 HOMEPAGE
 
@@ -159,7 +161,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
+Source repository is at L<https://github.com/perlancar/perl-Rinci>.
 
 =head1 BUGS
 
@@ -171,11 +173,11 @@ feature.
 
 =head1 AUTHOR
 
-Steven Haryanto <stevenharyanto@gmail.com>
+perlancar <perlancar@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2014 by Steven Haryanto.
+This software is copyright (c) 2014 by perlancar@cpan.org.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

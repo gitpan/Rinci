@@ -11,7 +11,7 @@ use ExtUtils::MakeMaker 6.30;
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "Language-neutral metadata for your code",
-  "AUTHOR" => "Steven Haryanto <stevenharyanto\@gmail.com>",
+  "AUTHOR" => "perlancar <perlancar\@cpan.org>",
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
@@ -28,7 +28,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.1.52",
+  "VERSION" => "1.1.53",
   "test" => {
     "TESTS" => "t/*.t"
   }
