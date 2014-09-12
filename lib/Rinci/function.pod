@@ -17,7 +17,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-This document describes version 1.1.53 of Rinci::function (from Perl distribution Rinci), released on 2014-09-11.
+This document describes version 1.1.54 of Rinci::function (from Perl distribution Rinci), released on 2014-09-12.
 
 =head1 SPECIFICATION VERSION
 
@@ -39,22 +39,24 @@ code/message as well as actual result. The envelope can be produced by the
 function itself, or added by a wrapper tool. Result envelope is modeled after
 HTTP or L<PSGI> response; it is an array in the following format:
 
- [STATUS, MESSAGE, RESULT, META]
+ [STATUS*, MESSAGE, RESULT, META]
 
-STATUS is a 3-digit integer, much like HTTP response status code and is
-explained further in L</"Envelope status codes">. MESSAGE is a string containing
-error message. RESULT (or PAYLOAD) is the actual content to be returned and can
-be omitted or set to undef if the function does not need to return anything.
-META is called result metadata, a defhash containing extra data, analogous to
-HTTP response headers. Result metadata is specified further in L<Rinci::result>.
+STATUS is a 3-digit integer and is the only required element, much like HTTP
+response status code and is explained further in L</"Envelope status codes">.
+MESSAGE is a string containing error message. RESULT (or PAYLOAD) is the actual
+content to be returned and can be omitted or set to undef if the function does
+not need to return anything. META is called result metadata, a defhash
+containing extra data, analogous to HTTP response headers. Result metadata is
+specified further in L<Rinci::result>.
 
 Some example of an enveloped results:
 
+ [200]
  [200, "OK", 42]
  [404, "Not found"]
- [500, "Can't delete foo: permission denied", {errno=>51}]
- [200, "Account created", {id=>9323},
-  {undo_calls=>[["delete_account", {id=>9323}]]}]
+ [200, "Account created", {id=>9323}, {}]
+ [500, "Can't delete foo: permission denied", undef,
+  {"cmdline.exit_code"=>300, perm_err=>1}]
 
 As mentioned, an enveloped result can contain error code/message as well as the
 actual result. It can also be easily converted to HTTP response message. And it
@@ -88,17 +90,18 @@ specification.
 
 =item * 1xx code
 
-Currently not used.
+Currently not used. Some tools like L<Perinci::CmdLine> assumes that status code
+is always C<< >= 200 >>, so you should perhaps never used status less than 200.
 
 =item * 2xx code - success
 
 200 should be used to mean success.
 
-206 can be used to signal partial content, for example: a C<read_file()>
-function which accepts C<byte_start> and C<byte_end> arguments should return 206
-when only partial file content is returned. But in general, use 200 as some
-callers will simply check for this exact code (instead of checking for range
-200-299).
+206 (partial content) can be used to signal partial content, for example: a
+C<read_file()> function which accepts C<byte_start> and C<byte_end> arguments
+should return 206 when only partial file content is returned. But in general,
+use 200 as some callers will simply check for this exact code (instead of
+checking for range 200-299).
 
 =item * 3xx code - further actions needs to be taken by user agent (caller)
 
@@ -152,10 +155,10 @@ authorization, use 401 and 403 respectively.
 
 429 (too many requests).
 
-(EXPERIMENTAL) 44x codes are reserved for function-specific codes. Each function
-is free to define what each number means. However, this is not really encouraged
-and should only be used if necessary. Function should perhaps stick to
-predefined codes here. To return more detailed status, result metadata can be
+(EXPERIMENTAL) 44x* codes are reserved for function-specific codes. Each
+function is free to define what each number means. However, this is not really
+encouraged and should only be used if necessary. Function should perhaps stick
+to predefined codes here. To return more detailed status, result metadata can be
 used.
 
 480* is general transaction error, e.g. transaction status is aborted so further
@@ -185,10 +188,10 @@ Users should try again at a later time.
 532* (failure in recording transaction) when there is a failure in updating
 transaction status or in preparing/committing/rolling back the transaction.
 
-(EXPERIMENTAL) 54x codes are reserved for function-specific codes. Each function
-is free to define what each number means. However, this is not really encouraged
-and should only be used if necessary. Function should perhaps stick to
-predefined codes here. To return more detailed status, result metadata can be
+(EXPERIMENTAL) 54x* codes are reserved for function-specific codes. Each
+function is free to define what each number means. However, this is not really
+encouraged and should only be used if necessary. Function should perhaps stick
+to predefined codes here. To return more detailed status, result metadata can be
 used.
 
 Try not to use code greater than 555, as some tools use (CODE-300) for error
@@ -1198,7 +1201,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Rinci>.
+Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
 
 =head1 BUGS
 

@@ -1,0 +1,100 @@
+package Rinci::FAQ; # just to make PodWeaver happy
+
+# DATE
+# VERSION
+
+1;
+# ABSTRACT: Metadata for your functions/methods
+
+__END__
+
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Rinci::FAQ - Metadata for your functions/methods
+
+=head1 VERSION
+
+This document describes version 1.1.54 of Rinci::FAQ (from Perl distribution Rinci), released on 2014-09-12.
+
+=head1 FAQ
+
+=head1 General
+
+=head2 Rinci::function
+
+=over
+
+=item * Why do you make enveloped result an arary instead of hash?
+
+For example, a hash-based enveloped result can be something like:
+
+ {status=>200, message=>"OK", result=>42, meta1=>..., meta2=>...}
+
+This has the benefit of a single container, but I picked array because of the
+brevity for simple cases (which are the majority), e.g.:
+
+ [200]        # versus {status=>200}
+ [200, "OK"]  # versus {status=>200, message=>"OK"}
+
+When handling enveloped result, the array version is also shorter:
+
+ if ($res->[0] == 200) { ... }
+ # versus: if ($res->{status} == 200) { ... }
+
+ print "Error $res->[0] - $res->[1]";
+ # versus: print "Error $res->{status} - $res->{message}";
+
+The hash version is more obvious for first-time reader, but after just some
+amount of time, C<< $res->[0] >>, C<< $res->[1] >> will become obvious if you
+use it consistently.
+
+As a bonus, arrays are faster and more space-efficient than hashes.
+
+=item * How do you indicate transient/temporary vs permanent errors?
+
+Some protocols, like SMTP or POP, defines 4xx codes as temporary errors and 5xx
+as permanent ones. This gives clue to clients whether to retry or not. HTTP,
+which Rinci is modelled after, does not provide such distinction to its status
+codes. However, Rinci defines a C<perm_err> result metadata that can be used for
+such purpose, e.g.:
+
+ [500, "Can't submit mail, we are being blocked by RBL", undef,
+  {perm_err=>0}]
+
+ [500, "Can't submit mail, destination address does not exist", undef,
+  {perm_err=>1}]
+
+=back
+
+=head1 HOMEPAGE
+
+Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
+
+=head1 SOURCE
+
+Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
+
+=head1 BUGS
+
+Please report any bugs or feature requests on the bugtracker website L<https://rt.cpan.org/Public/Dist/Display.html?Name=Rinci>
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+=head1 AUTHOR
+
+perlancar <perlancar@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by perlancar@cpan.org.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=cut
