@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.54'; # VERSION
-our $DATE = '2014-09-12'; # DATE
+our $VERSION = '1.1.55'; # VERSION
+our $DATE = '2014-10-09'; # DATE
 
 our %SCHEMAS;
 
@@ -22,6 +22,7 @@ my %dh_props = (
 
 $SCHEMAS{rinci} = [hash => {
     # tmp
+    _ver => 1.1, # this has the effect of version checking
     _prop => {
         %dh_props,
 
@@ -40,6 +41,7 @@ $SCHEMAS{rinci} = [hash => {
 
 $SCHEMAS{rinci_function} = [hash => {
     # tmp
+    _ver => 1.1,
     _prop => {
         %dh_props,
 
@@ -74,6 +76,7 @@ $SCHEMAS{rinci_function} = [hash => {
                 completion => {},
                 element_completion => {},
                 cmdline_src => {},
+                meta => 'fix',
             },
         },
         args_as => {},
@@ -133,6 +136,8 @@ $SCHEMAS{rinci_function} = [hash => {
         },
     },
 }];
+$SCHEMAS{rinci_function}[1]{_prop}{args}{_value_prop}{meta} =
+    $SCHEMAS{rinci_function}[1];
 
 # rinci_package
 # rinci_variable
@@ -153,7 +158,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.54 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-09-12.
+This document describes version 1.1.55 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-09.
 
 =head1 HOMEPAGE
 
@@ -161,7 +166,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
+Source repository is at L<https://github.com/perlancar/perl-Rinci>.
 
 =head1 BUGS
 
