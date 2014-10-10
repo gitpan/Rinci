@@ -17,7 +17,7 @@ Rinci::Transaction - A transactional system based on functions
 
 =head1 VERSION
 
-This document describes version 1.1.55 of Rinci::Transaction (from Perl distribution Rinci), released on 2014-10-09.
+This document describes version 1.1.56 of Rinci::Transaction (from Perl distribution Rinci), released on 2014-10-10.
 
 =head1 SPECIFICATION VERSION
 
