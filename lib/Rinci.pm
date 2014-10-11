@@ -1,6 +1,6 @@
 package Rinci;
 
-our $VERSION = '1.1.56'; # VERSION
+our $VERSION = '1.1.57'; # VERSION
 
 1;
 # ABSTRACT: Language-neutral metadata for your code
@@ -17,7 +17,7 @@ Rinci - Language-neutral metadata for your code
 
 =head1 VERSION
 
-This document describes version 1.1.56 of Rinci (from Perl distribution Rinci), released on 2014-10-10.
+This document describes version 1.1.57 of Rinci (from Perl distribution Rinci), released on 2014-10-11.
 
 =head1 HOMEPAGE
 
@@ -25,7 +25,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Rinci>.
+Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
 
 =head1 BUGS
 

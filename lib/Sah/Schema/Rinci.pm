@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.56'; # VERSION
-our $DATE = '2014-10-10'; # DATE
+our $VERSION = '1.1.57'; # VERSION
+our $DATE = '2014-10-11'; # DATE
 
 our %SCHEMAS;
 
@@ -69,6 +69,7 @@ $SCHEMAS{rinci_function} = [hash => {
                         description => {},
                         schema => {},
                         code => {},
+                        is_flag => {},
                     },
                 },
                 cmdline_on_getopt => {},
@@ -161,7 +162,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.56 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-10.
+This document describes version 1.1.57 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-11.
 
 =head1 HOMEPAGE
 
@@ -169,7 +170,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/perlancar/perl-Rinci>.
+Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
 
 =head1 BUGS
 
