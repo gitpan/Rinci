@@ -1,6 +1,7 @@
-package Rinci::result; # just to make PodWeaver happy
+package Rinci::resmeta; # just to make PodWeaver happy
 
-# VERSION
+our $DATE = '2014-10-16'; # DATE
+our $VERSION = '1.1.58'; # VERSION
 
 1;
 # ABSTRACT: Function/method result metadata
@@ -13,11 +14,11 @@ __END__
 
 =head1 NAME
 
-Rinci::result - Function/method result metadata
+Rinci::resmeta - Function/method result metadata
 
 =head1 VERSION
 
-This document describes version 1.1.57 of Rinci::result (from Perl distribution Rinci), released on 2014-10-11.
+This document describes version 1.1.58 of Rinci::resmeta (from Perl distribution Rinci), released on 2014-10-16.
 
 =head1 SPECIFICATION VERSION
 

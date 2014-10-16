@@ -15,7 +15,7 @@ lib/Rinci/Undo.pod
 lib/Rinci/Upgrading.pod
 lib/Rinci/function.pod
 lib/Rinci/package.pod
-lib/Rinci/result.pod
+lib/Rinci/resmeta.pm
 lib/Rinci/variable.pod
 lib/Sah/Schema/Rinci.pm
 t/00-compile.t
