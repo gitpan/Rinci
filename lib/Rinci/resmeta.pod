@@ -1,7 +1,7 @@
 package Rinci::resmeta; # just to make PodWeaver happy
 
-our $DATE = '2014-10-16'; # DATE
-our $VERSION = '1.1.58'; # VERSION
+# DATE
+# VERSION
 
 1;
 # ABSTRACT: Function/method result metadata
@@ -18,7 +18,7 @@ Rinci::resmeta - Function/method result metadata
 
 =head1 VERSION
 
-This document describes version 1.1.58 of Rinci::resmeta (from Perl distribution Rinci), released on 2014-10-16.
+This document describes version 1.1.59 of Rinci::resmeta (from Perl distribution Rinci), released on 2014-10-22.
 
 =head1 SPECIFICATION VERSION
 
@@ -122,6 +122,40 @@ Example:
      if ($res is error) { return [500, "Can't f3", undef, {prev=>$res}] }
  }
 
+=head2 Property: encoding => str
+
+Specify encoding for result. Currently the only recommended value is C<base64>.
+This applies to actual result (third element in enveloped result) as well as all
+values of C<func.*> properties. Result as well as all C<func.*> properties must
+be strings. This can be used for example when enveloped result is represented in
+a serialization format that is not binary-safe, e.g. JSON:
+
+ [200, "OK", "AAAA", {"encoding":"base64", "func.extra":"dWphbmc="}]
+
+In the above example, actual result is 3 zero bytes ("\0\0\0") encoded in
+base64, while C<func.extra> contains the string "ujang".
+
+=head2 Property: arg_errors => hash
+
+When a function wants to give information on what arguments fail validation, it
+can put the information here. This is usually only present when response status
+is 400 (bad arguments). Keys are argument names (or paths: separate submetadata
+argument with slash C</>) while values are string error messages. Example:
+
+ # full error response
+ [400, "Some arguments fail validation", undef, {
+      arg_errors => {
+          name=>"Missing",
+          "location/street"=>"Missing",
+          age=>"Must be numbers only",
+      },
+ }]
+
+=head2 Property: arg_warnings => hash
+
+Like C<arg_errors> but warnings only. Can be present even when response status
+is non-error (200).
+
 =head1 FAQ
 
 =head1 SEE ALSO
@@ -134,7 +168,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
+Source repository is at L<https://github.com/perlancar/perl-Rinci>.
 
 =head1 BUGS
 

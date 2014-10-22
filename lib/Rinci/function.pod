@@ -17,7 +17,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-This document describes version 1.1.58 of Rinci::function (from Perl distribution Rinci), released on 2014-10-16.
+This document describes version 1.1.59 of Rinci::function (from Perl distribution Rinci), released on 2014-10-22.
 
 =head1 SPECIFICATION VERSION
 
@@ -66,7 +66,8 @@ can also contain extra data, useful for things like the transaction protocol
 B<Special arguments>. Special arguments are some known arguments that start with
 dash (C<->) and serve special purposes. You need not specify them in the C<args>
 metadata property. Examples of special arguments include C<-dry_run>,
-C<-tx_action>, and they will be explained in other related sections/documents.
+C<-tx_action>, C<-action>, and they will be explained in other related
+sections/documents.
 
 B<Functions vs methods>. Since in many programming languages (like Perl 5,
 Python, Ruby, PHP) static functions are not that differentiated from methods,
@@ -283,6 +284,21 @@ from zero.
 
 Only relevant if B<pos> is specified, specify whether argument should gobble up
 all remaining values in an ordered argument list into an array.
+
+=item * B<encoding> => str
+
+Specify encoding for argument value and that function will try to decode the
+argument with this encoding (when argument value is a string). Currently the
+only recommended value is C<base64>. This can be used for example when you want
+to send binary data when the serialization format does not support binary data,
+e.g. JSON. For example:
+
+ args => {
+     separator => {schema=>"str", encoding=>"base64"},
+ }
+
+This means, when you want to send "\0\0\0" in the C<separator> argument, you
+send in "AAAA". The function will decode it and get the actual value.
 
 =item * B<cmdline_aliases> => HASH
 
@@ -950,6 +966,16 @@ record the original file that was renamed (its MD5 checksum, size, or what not)
 or perhaps record the action in a history database or flag file, and refuse to
 rename again if the file to be renamed is not the original file.
 
+=item * feature: check_arg => bool
+
+Default is false. If set to true, specifies that function supports the action of
+checking only a single argument. Usually useful when doing form processing,
+where we want to check only a single form field (function argument). To check a
+single argument, one passes C<-action> special argument with the value of
+C<check_arg> and also passes the argument she wants to check. Function should
+check that argument and immediately return 200 status upon success, or 400 upon
+validation failure.
+
 =back
 
 =head2 Property: deps => HASH
@@ -1213,7 +1239,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
+Source repository is at L<https://github.com/perlancar/perl-Rinci>.
 
 =head1 BUGS
 
