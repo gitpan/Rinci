@@ -17,7 +17,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-This document describes version 1.1.60 of Rinci::function (from Perl distribution Rinci), released on 2014-10-22.
+This document describes version 1.1.61 of Rinci::function (from Perl distribution Rinci), released on 2014-10-22.
 
 =head1 SPECIFICATION VERSION
 
@@ -671,6 +671,11 @@ columns.
 
 A Sah schema to validate the result (the third element in the envelope result).
 This schema should only be tested if status is 200. See also: C<statuses>.
+
+=item * B<encoding> => str
+
+Gives hint to tools that result should be encoded by default. See C<encoding>
+property in L<Rinci::resmeta>.
 
 =item * B<statuses> => HASH
 
