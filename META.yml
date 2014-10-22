@@ -17,12 +17,12 @@ meta-spec:
   version: '1.4'
 name: Rinci
 requires:
-  DefHash: v1.0.3
+  DefHash: v1.0.6
 resources:
   bugtracker: https://rt.cpan.org/Public/Dist/Display.html?Name=Rinci
   homepage: https://metacpan.org/release/Rinci
   repository: git://github.com/perlancar/perl-Rinci.git
-version: 1.1.59
+version: 1.1.60
 x_Dist_Zilla:
   perl:
     version: '5.018002'

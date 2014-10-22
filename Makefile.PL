@@ -20,7 +20,7 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "Rinci",
   "PREREQ_PM" => {
-    "DefHash" => "v1.0.3"
+    "DefHash" => "v1.0.6"
   },
   "TEST_REQUIRES" => {
     "File::Spec" => 0,
@@ -28,7 +28,7 @@ my %WriteMakefileArgs = (
     "IPC::Open3" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.1.59",
+  "VERSION" => "1.1.60",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -36,7 +36,7 @@ my %WriteMakefileArgs = (
 
 
 my %FallbackPrereqs = (
-  "DefHash" => "v1.0.3",
+  "DefHash" => "v1.0.6",
   "File::Spec" => 0,
   "IO::Handle" => 0,
   "IPC::Open3" => 0,

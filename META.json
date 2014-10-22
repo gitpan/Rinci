@@ -29,7 +29,7 @@
       },
       "runtime" : {
          "requires" : {
-            "DefHash" : "v1.0.3"
+            "DefHash" : "v1.0.6"
          }
       },
       "test" : {
@@ -53,7 +53,7 @@
          "web" : "https://github.com/perlancar/perl-Rinci"
       }
    },
-   "version" : "1.1.59",
+   "version" : "1.1.60",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018002"
