@@ -17,7 +17,7 @@ Rinci - Language-neutral metadata for your code entities
 
 =head1 VERSION
 
-This document describes version 1.1.61 of Rinci (from Perl distribution Rinci), released on 2014-10-22.
+This document describes version 1.1.62 of Rinci (from Perl distribution Rinci), released on 2014-10-23.
 
 =head1 SPECIFICATION VERSION
 
