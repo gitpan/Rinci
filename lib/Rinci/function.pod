@@ -17,7 +17,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-This document describes version 1.1.62 of Rinci::function (from Perl distribution Rinci), released on 2014-10-23.
+This document describes version 1.1.63 of Rinci::function (from Perl distribution Rinci), released on 2014-10-28.
 
 =head1 SPECIFICATION VERSION
 
@@ -98,11 +98,25 @@ is always C<< >= 200 >>, so you should perhaps never used status less than 200.
 
 200 should be used to mean success.
 
+201 (created) can be used to signal success when creating something.
+
+204 (no content) can also be used when there is no content to show. In HTTP,
+browsers won't clear current page if response is 206 (instead of showing a blank
+page if response is 200). Currently in Rinci there is no difference between 200
+and 204.
+
 206 (partial content) can be used to signal partial content, for example: a
 C<read_file()> function which accepts C<byte_start> and C<byte_end> arguments
 should return 206 when only partial file content is returned. But in general,
 use 200 as some callers will simply check for this exact code (instead of
 checking for range 200-299).
+
+207 (multistatus) can be used to signal partial success, for example a function
+which processed 5 items wanted to report that it successfully processed 2 items
+but failed to process the rest 3 items. For each item's statuses, you can use
+result metadata property C<results>. Note: 207 is used by WebDAV. Note: When all
+functions instead of only some/partial items fail, you might want to return 4xx
+or 5xx instead of 207.
 
 =item * 3xx code - further actions needs to be taken by user agent (caller)
 

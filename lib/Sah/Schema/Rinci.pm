@@ -4,8 +4,8 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.62'; # VERSION
-our $DATE = '2014-10-23'; # DATE
+our $VERSION = '1.1.63'; # VERSION
+our $DATE = '2014-10-28'; # DATE
 
 our %SCHEMAS;
 
@@ -165,7 +165,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.62 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-23.
+This document describes version 1.1.63 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-28.
 
 =head1 HOMEPAGE
 
