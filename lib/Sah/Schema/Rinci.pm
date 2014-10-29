@@ -4,7 +4,7 @@ use 5.010001;
 use strict;
 use warnings;
 
-our $VERSION = '1.1.65'; # VERSION
+our $VERSION = '1.1.66'; # VERSION
 our $DATE = '2014-10-29'; # DATE
 
 our %SCHEMAS;
@@ -151,7 +151,7 @@ $SCHEMAS{rinci_function}[1]{_prop}{args}{_value_prop}{element_meta} =
 # rinci_result
 
 # list of known special arguments: -dry_run, -action, -tx_action,
-# -res_part_start, -res_part_len, -arg_part_start/*, -arg_part_len/*
+# -res_part_start, -res_part_len, -arg_part_start, -arg_part_len
 
 1;
 # ABSTRACT: Sah schemas for Rinci metadata
@@ -168,7 +168,7 @@ Sah::Schema::Rinci - Sah schemas for Rinci metadata
 
 =head1 VERSION
 
-This document describes version 1.1.65 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-29.
+This document describes version 1.1.66 of Sah::Schema::Rinci (from Perl distribution Rinci), released on 2014-10-29.
 
 =head1 HOMEPAGE
 
