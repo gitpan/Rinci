@@ -2,7 +2,7 @@ NAME
     Rinci - Language-neutral metadata for your code
 
 VERSION
-    This document describes version 1.1.64 of Rinci (from Perl distribution
+    This document describes version 1.1.65 of Rinci (from Perl distribution
     Rinci), released on 2014-10-29.
 
 HOMEPAGE
@@ -10,7 +10,7 @@ HOMEPAGE
     <https://metacpan.org/release/Rinci>.
 
 SOURCE
-    Source repository is at <https://github.com/sharyanto/perl-Rinci>.
+    Source repository is at <https://github.com/perlancar/perl-Rinci>.
 
 BUGS
     Please report any bugs or feature requests on the bugtracker website

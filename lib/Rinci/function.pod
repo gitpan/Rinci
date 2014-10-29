@@ -18,7 +18,7 @@ Rinci::function - Metadata for your functions/methods
 
 =head1 VERSION
 
-This document describes version 1.1.64 of Rinci::function (from Perl distribution Rinci), released on 2014-10-29.
+This document describes version 1.1.65 of Rinci::function (from Perl distribution Rinci), released on 2014-10-29.
 
 =head1 SPECIFICATION VERSION
 
@@ -1324,7 +1324,7 @@ Please visit the project's homepage at L<https://metacpan.org/release/Rinci>.
 
 =head1 SOURCE
 
-Source repository is at L<https://github.com/sharyanto/perl-Rinci>.
+Source repository is at L<https://github.com/perlancar/perl-Rinci>.
 
 =head1 BUGS
 
