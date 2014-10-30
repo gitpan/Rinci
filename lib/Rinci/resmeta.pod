@@ -18,7 +18,7 @@ Rinci::resmeta - Function/method result metadata
 
 =head1 VERSION
 
-This document describes version 1.1.67 of Rinci::resmeta (from Perl distribution Rinci), released on 2014-10-30.
+This document describes version 1.1.68 of Rinci::resmeta (from Perl distribution Rinci), released on 2014-10-30.
 
 =head1 SPECIFICATION VERSION
 
@@ -171,8 +171,8 @@ status will be 206.
 =head1 Property: stream => bool
 
 If set to true, signify that result is an output stream. Usually in
-implementations it will be a filehandle or an object with C<getline> or C<get>
-methods.
+implementations the result will be a filehandle or an object with C<getline> or
+C<getitem> methods, where caller can then fetch data from it.
 
 =head1 FAQ
 
